@@ -1,0 +1,85 @@
+Base de datos: /tmp/tmpeg4sn7x1/agroid_huevos.db
+Modelo: openai/gpt-6-luna | API key cargada: True
+[{'nombre': 'gallina', 'stock': 800, 'huevos_dia': 300}, {'nombre': 'codorniz', 'stock': 1500, 'huevos_dia': 400}, {'nombre': 'pato', 'stock': 200, 'huevos_dia': 40}, {'nombre': 'ganso', 'stock': 20, 'huevos_dia': 3}, {'nombre': 'guinea', 'stock': 60, 'huevos_dia': 10}]
+⚠️ Embeddings no disponibles (ConnectionError); se usa TF-IDF como respaldo.
+Modo de recuperación: tfidf
+[(0.3194552042581272, 'Almacenamiento de huevos de codorniz: tienen cáscara más fina y frágil. Refrigerados duran hasta unas 6 semanas. Usar bandejas pequeñas y manipular con cuidado para evitar fisuras.')]
+Herramientas listas: ['consultar_stock', 'consultar_pedidos', 'registrar_produccion', 'registrar_pedido', 'despachar_pedido', 'recordar_dato', 'evaluar_cumplimiento', 'calcular_deficit', 'priorizar_pedidos', 'buscar_manual']
+✅ Todas las pruebas de herramientas pasaron.
+✅ Agente listo. Modelo: openai/gpt-6-luna
+
+======================================================================
+1) Consulta + razonamiento: ¿podemos cumplir un pedido grande?  [modo: plan]
+======================================================================
+👤 Tenemos un pedido grande este mes: necesito 1800 huevos entre codorniz y pato en 5 días. Revisa si con el stock de ambos podemos cumplir la demanda.
+celda:43: LangChainDeprecationWarning: The class `ConversationBufferWindowMemory` was deprecated in LangChain 0.3.1 and will be removed in 2.0.0. Use `langchain.agents.create_agent` instead. For agents that need to remember prior interactions, use `create_agent` with checkpointing or the `Store` API. See https://docs.langchain.com/oss/python/langchain/short-term-memory and https://docs.langchain.com/oss/python/langchain/long-term-memory
+/tmp/claude-0/-home-claude/33a878e3-1639-5b65-96c5-28754b493184/scratchpad/venv_dir/v/lib/python3.13/site-packages/pydantic/main.py:280: LangChainDeprecationWarning: The class `InMemoryChatMessageHistory` was deprecated in LangChain 1.6.4 and will be removed in 2.0.0 See the short-term memory documentation for recommended alternatives: https://docs.langchain.com/oss/python/langchain/short-term-memory
+  validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+📋 PLAN:
+1. calcular_deficit
+2. priorizar_pedidos
+3. responder
+🔧 evaluar_cumplimiento({'cantidad_requerida': 1800, 'especies': 'codorniz,pato', 'dias': 5}) -> {"requerido": 1800, "dias": 5, "disponible_hoy": 1700, "proyectado_al_plazo": 3900, "cumple_solo_con_stock": false, "cumple_con_produccion": true, "deficit_con_
+🤖 [SIM] {"requerido": 1800, "dias": 5, "disponible_hoy": 1700, "proyectado_al_plazo": 3900, "cumple_solo_con_stock": false, "cum
+
+======================================================================
+2) Escritura: llegó producción nueva  [modo: react]
+======================================================================
+👤 Acabo de recolectar 500 huevos de gallina.
+🔧 registrar_produccion({'especie': 'gallina', 'cantidad': 500}) -> OK: se sumaron 500 huevos de gallina. Stock actual de gallina: 1300.
+🤖 [SIM] OK: se sumaron 500 huevos de gallina. Stock actual de gallina: 1300.
+
+======================================================================
+3) Razonamiento sobre datos actualizados: déficit  [modo: react]
+======================================================================
+👤 ¿Hay déficit con los pedidos pendientes?
+🔧 calcular_deficit({'dias': 0}) -> [{"especie": "gallina", "demanda_pendiente": 1800, "stock": 1300, "horizonte_dias": 5, "disponible_proyectado": 2800, "deficit_hoy": 500, "deficit_proyectado": 
+🤖 [SIM] [{"especie": "gallina", "demanda_pendiente": 1800, "stock": 1300, "horizonte_dias": 5, "disponible_proyectado": 2800, "d
+
+======================================================================
+4) Planificación por prioridades + recuperación semántica (manual)  [modo: plan]
+======================================================================
+👤 Prioriza los pedidos pendientes y dime cómo conviene almacenar los huevos de codorniz.
+📋 PLAN:
+1. calcular_deficit
+2. priorizar_pedidos
+3. responder
+🔧 priorizar_pedidos({}) -> [{"prioridad": 1, "pedido": 1, "cliente": "Restaurante Don Pepe", "especie": "gallina", "cantidad": 600, "fecha_limite": "2026-10-20", "estado": "cumplible", "f
+🔧 buscar_manual({'consulta': 'almacenar huevos de codorniz'}) -> [0.24] Almacenamiento de huevos de codorniz: tienen cáscara más fina y frágil. Refrigerados duran hasta unas 6 semanas. Usar bandejas pequeñas y manipular con c
+🤖 [SIM] [{"prioridad": 1, "pedido": 1, "cliente": "Restaurante Don Pepe", "especie": "gallina", "cantidad": 600, "fecha_limite": || [0.24] Almacenamiento de huevos de codorniz: tienen cáscara más fina y frágil. Refrigerados duran hasta unas 6 semanas. 
+
+======================================================================
+5) Memoria larga: pedir que recuerde un dato  [modo: react]
+======================================================================
+👤 Recuerda que el cliente Hotel Costa solo acepta huevos de pato.
+🔧 recordar_dato({'clave': 'Hotel Costa', 'valor': 'solo acepta huevos de pato'}) -> OK: recordaré 'Hotel Costa': solo acepta huevos de pato.
+🤖 [SIM] OK: recordaré 'Hotel Costa': solo acepta huevos de pato.
+
+======================================================================
+6) Manejo de errores: especie inexistente y cantidad inválida  [modo: react]
+======================================================================
+👤 Registra 50 huevos de dragón y también -20 huevos de pato.
+🔧 registrar_produccion({'especie': 'dragón', 'cantidad': 50}) -> Error: especie 'dragón' no reconocida. Opciones: gallina, codorniz, pato, ganso, guinea. No se modificó nada.
+🔧 registrar_produccion({'especie': 'pato', 'cantidad': -20}) -> Error: cantidad inválida (-20); debe estar entre 1 y 100000. No se modificó nada.
+🤖 [SIM] Error: especie 'dragón' no reconocida. Opciones: gallina, codorniz, pato, ganso, guinea. No se modificó nada. || Error: cantidad inválida (-20); debe estar entre 1 y 100000. No se modificó nada.
+
+======================================================================
+7) Cambio de condiciones: pedido urgente y re-priorización  [modo: plan]
+======================================================================
+👤 Entró un pedido urgente: Clínica Sur necesita 900 huevos de gallina para mañana. Regístralo y reprioriza.
+📋 PLAN:
+1. calcular_deficit
+2. priorizar_pedidos
+3. responder
+🔧 registrar_pedido({'cliente': 'Clínica Sur', 'especie': 'gallina', 'cantidad': 900, 'dias_plazo': 1}) -> OK: pedido #5 registrado (Clínica Sur: 900 huevos de gallina, entrega antes de 2026-10-19).
+🔧 priorizar_pedidos({}) -> [{"prioridad": 1, "pedido": 5, "cliente": "Clínica Sur", "especie": "gallina", "cantidad": 900, "fecha_limite": "2026-10-19", "estado": "cumplible", "faltante":
+🤖 [SIM] OK: pedido #5 registrado (Clínica Sur: 900 huevos de gallina, entrega antes de 2026-10-19). || [{"prioridad": 1, "pedido": 5, "cliente": "Clínica Sur", "especie": "gallina", "cantidad": 900, "fecha_limite": "2026-10
+
+======================================================================
+8) Persistencia tras reinicio (misma session_id)  [modo: react]
+======================================================================
+👤 Retomando: ¿qué te pedí recordar sobre Hotel Costa y qué hablamos sobre el déficit?
+🤖 [SIM] Datos en memoria: Datos recordados de esta sesión:
+- Hotel Costa: solo acepta huevos de pato | consultas previas visibles: 5
+
+✅ PRUEBAS CON LLM SIMULADO: TODAS PASARON | modo recuperación: tfidf

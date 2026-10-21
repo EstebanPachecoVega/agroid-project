@@ -1,0 +1,44 @@
+sequenceDiagram
+    autonumber
+    participant U as Usuario
+    participant C as chat · Orquestador
+    participant A as AgentExecutor · ReAct
+    participant L as LLM · OpenRouter
+    participant T as Herramienta · tool
+    participant D as SQLite · Drive
+    participant M as Recuperador · manual
+    U->>C: chat(texto, session_id, modo)
+    C->>C: SESION[id] = session_id
+    opt memoria RAM aún no cargada para esta session_id
+        C->>D: SELECT historial (últimos 10 mensajes)
+        D-->>C: filas
+        C->>C: cargar_memoria(): ventana k = 5
+    end
+    C->>D: SELECT datos de la sesión
+    D-->>C: datos recordados
+    opt modo = plan
+        C->>L: planificar(): plan de 3 a 5 pasos
+        L-->>C: plan numerado
+        C->>C: entrada = texto + plan sugerido
+    end
+    C->>A: invoke(entrada, hoy, datos_sesion, chat_history)
+    loop hasta respuesta final o 8 iteraciones
+        A->>L: prompt + historial + scratchpad
+        L-->>A: tool_call(nombre, args)
+        A->>T: ejecuta la herramienta con args
+        alt consulta, razonamiento o escritura
+            T->>D: SELECT / UPDATE / INSERT
+            D-->>T: filas o confirmación
+        else buscar_manual
+            T->>M: buscar(consulta, k = 2)
+            M-->>T: fragmentos con puntaje
+        end
+        T-->>A: observación: JSON o texto (los errores vuelven como texto)
+    end
+    A->>L: observaciones acumuladas
+    L-->>A: respuesta final
+    A-->>C: output + intermediate_steps
+    C->>C: memoria.save_context(entrada, salida)
+    C->>D: INSERT historial: mensaje humano y respuesta
+    C-->>U: respuesta (+ trazas si verbose)
+    Note over C,A: Si el LLM o el agente lanzan una excepción: chat() devuelve «⚠ No pude completar la consulta…» y no guarda el turno.
