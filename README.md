@@ -226,7 +226,6 @@ Desde la carpeta `docs/`, con `matplotlib`, `reportlab`, `Pillow` y `pypdf` inst
 
 ```bash
 python generar_diagramas.py        # actualiza los dos PNG y el .mmd
-python generar_informe_pdf.py      # regenera el PDF desde INFORME_TECNICO.md
 ```
 
 ## Referencias de software
