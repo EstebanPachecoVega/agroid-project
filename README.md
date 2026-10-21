@@ -229,17 +229,6 @@ python generar_diagramas.py        # actualiza los dos PNG y el .mmd
 python generar_informe_pdf.py      # regenera el PDF desde INFORME_TECNICO.md
 ```
 
-El diagrama de secuencia se edita en la lista `EVENTOS` de `generar_diagramas.py` y el de arquitectura en la función `arquitectura()`. Si cambias el código del notebook (herramientas, memoria, planificador), actualiza también los diagramas.
-
-## Pendientes del equipo para la evaluación
-
-La pauta reserva al equipo la autoría de las justificaciones técnicas, las conclusiones y las reflexiones individuales. Esos textos no se completan aquí:
-
-- **Informe, sección 7:** la tabla de decisiones ya describe qué se hizo y qué límite tiene; falta la argumentación del equipo de por qué cada decisión es adecuada.
-- **Informe, sección 8:** una conclusión y reflexión individual por integrante.
-- **Declaración de IA (sección 9):** ya incluye a OpenAI Codex y a Claude para la documentación; el equipo debe agregar cualquier otra herramienta usada en el notebook y confirmar que la frase sobre autoría de las secciones 7 y 8 sea cierta al entregar.
-- Ejecución real en Colab con salidas completas, validación de las fuentes del manual y preparación de la presentación oral con participación de ambos integrantes y demo en vivo. Los documentos escritos por sí solos no prueban esos aspectos de presentación.
-
 ## Referencias de software
 
 Las referencias con formato APA se listan en el informe técnico. La documentación enlazada describe las herramientas; no valida por sí misma los datos avícolas incluidos en el manual.
