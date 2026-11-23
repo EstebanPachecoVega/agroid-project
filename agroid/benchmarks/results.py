@@ -425,7 +425,15 @@ def _write_markdown(
             "",
             "![LangSmith Tracing](captura_langsmith_02_tracing.png)",
             "",
-            "![LangSmith Monitoring](captura_langsmith_03_monitoring.png)",
+            "![LangSmith Monitoring · Traces](captura_langsmith_03_monitoring_traces.png)",
+            "",
+            "![LangSmith Monitoring · LLM Calls](captura_langsmith_04_monitoring_llm_calls.png)",
+            "",
+            "![LangSmith Monitoring · Tools](captura_langsmith_05_monitoring_tools.png)",
+            "",
+            "![LangSmith Monitoring · Run Types](captura_langsmith_06_monitoring_run_types.png)",
+            "",
+            "![LangSmith Monitoring · Cost & Tokens](captura_langsmith_07_monitoring_cost_tokens.png)",
             "",
             "La captura de calidad usa los filtros `Solo corridas reales` y "
             "`Excluir intentos con error`; puede incluir corridas auxiliares. "
@@ -485,7 +493,11 @@ def generate(evidence_dir: str | Path | None = None) -> dict[str, Any]:
             "captura_dashboard_seguridad.jpeg",
             "captura_langsmith_01_overview.png",
             "captura_langsmith_02_tracing.png",
-            "captura_langsmith_03_monitoring.png",
+            "captura_langsmith_03_monitoring_traces.png",
+            "captura_langsmith_04_monitoring_llm_calls.png",
+            "captura_langsmith_05_monitoring_tools.png",
+            "captura_langsmith_06_monitoring_run_types.png",
+            "captura_langsmith_07_monitoring_cost_tokens.png",
         ],
     }
     json_path.write_text(

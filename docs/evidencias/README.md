@@ -12,7 +12,7 @@ python docs/generar_anexo_evidencias.py
 - `RESULTADOS_CORRIDAS.md`: resumen de las 29 corridas reales, consistencia, sesgo, TTFT, carga e incidentes.
 - `resultados_turnos.csv`: una fila por turno evaluado.
 - `resultados_consolidados.json`: detalle estructurado para el dashboard y el informe.
-- `ANEXO_EVIDENCIAS.pdf`: anexo visual con el resumen, las seis capturas del tablero y las tres vistas de LangSmith.
+- `ANEXO_EVIDENCIAS.pdf`: anexo visual con el resumen, las seis capturas del tablero y las siete vistas de LangSmith.
 
 ## Generar evidencia
 
@@ -47,7 +47,11 @@ python -m agroid.benchmarks.export
 - `captura_dashboard_seguridad.jpeg`: eventos de seguridad e integridad.
 - `captura_langsmith_01_overview.png`: actividad, latencia, costo y uso por modelo/herramienta.
 - `captura_langsmith_02_tracing.png`: listado de trazas reales.
-- `captura_langsmith_03_monitoring.png`: evolución temporal de trazas, latencia y error.
+- `captura_langsmith_03_monitoring_traces.png`: evolución temporal de trazas, latencia y error.
+- `captura_langsmith_04_monitoring_llm_calls.png`: número y latencia de las llamadas LLM.
+- `captura_langsmith_05_monitoring_tools.png`: uso, latencia y error por herramienta.
+- `captura_langsmith_06_monitoring_run_types.png`: conteo y latencia por tipo de ejecución.
+- `captura_langsmith_07_monitoring_cost_tokens.png`: costo total, tokens de salida y percentiles.
 
 ## Reglas de sanitización
 
@@ -67,7 +71,11 @@ ttft_<timestamp>.json
 langsmith_<project>_<timestamp>.jsonl
 captura_langsmith_01_overview.png
 captura_langsmith_02_tracing.png
-captura_langsmith_03_monitoring.png
+captura_langsmith_03_monitoring_traces.png
+captura_langsmith_04_monitoring_llm_calls.png
+captura_langsmith_05_monitoring_tools.png
+captura_langsmith_06_monitoring_run_types.png
+captura_langsmith_07_monitoring_cost_tokens.png
 captura_dashboard_resumen.jpeg
 captura_dashboard_calidad.jpeg
 captura_dashboard_seguridad.jpeg

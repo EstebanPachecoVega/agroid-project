@@ -11,7 +11,7 @@
 | IE4 (10%) | Dashboard interactivo | Streamlit de 6 pestañas con filtros, KPIs, waterfall, costos, calidad y seguridad | `agroid/dashboard/app.py` | Implementado y verificado en navegador |
 | IE7 (10%) | Escalabilidad y sostenibilidad | Proyección de costo/1.000, tasa de duplicados para caché, análisis de contención SQLite, propuestas de Redis/Postgres/model routing | `metrics.cost_projection`, `benchmarks/load.py`, informe sección 4 | Implementado; carga 40/5 y proyecciones |
 | IE8 (10%) | Seguridad, ética y privacidad | PII, inyección, rate limiting, integridad SHA-256/HMAC, moderación, límites, auditoría de sesgo y XAI | `agroid/security/`, `tests/test_security.py`, pestaña “Seguridad” | Implementado; 7/7 pruebas y sesgo 4/4 |
-| Cierre | Informe ≤5 páginas, reflexiones sin IA, declaración, README, repo | `docs/INFORME_TECNICO_EP3.md`, `README.md`, `.env.example`, `.gitignore`, `docs/evidencias/RESULTADOS_CORRIDAS.md` | PDF (4 páginas) + anexo (7 páginas) + repositorio | En progreso |
+| Cierre | Informe ≤5 páginas, reflexiones sin IA, declaración, README, repo | `docs/INFORME_TECNICO_EP3.md`, `README.md`, `.env.example`, `.gitignore`, `docs/evidencias/RESULTADOS_CORRIDAS.md` | PDF (4 páginas) + anexo (14 páginas) + repositorio | En progreso |
 
 ## Comandos de verificación
 
@@ -50,7 +50,7 @@ streamlit run agroid/dashboard/app.py
 - [x] Medir TTFT real (353–638 ms) y throughput (38,8–160 tokens/s).
 - [x] Exportar trazas de LangSmith y verificar el proyecto.
 - [x] Verificar el dashboard y capturar Resumen, Rendimiento, Calidad, Traza y Seguridad.
-- [x] Generar el PDF final (4 páginas) y el anexo de evidencias (7 páginas).
+- [x] Generar el PDF final (4 páginas) y el anexo de evidencias (14 páginas).
 - [ ] Redactar las reflexiones individuales sin IA.
 - [x] Ajustar la declaración de IA en `docs/DECLARACION_USO_IA.md` y en el informe.
 - [ ] Revisar que no haya claves, PII ni bases crudas en el repositorio y subir a GitHub/GitLab.

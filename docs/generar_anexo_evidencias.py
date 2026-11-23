@@ -67,8 +67,24 @@ CAPTIONS = [
         "LangSmith · Tracing: listado de trazas reales con entrada, salida, latencia, tokens y metadatos de sesión.",
     ),
     (
-        "captura_langsmith_03_monitoring.png",
-        "LangSmith · Monitoring: evolución temporal de trazas, latencia y tasa de error.",
+        "captura_langsmith_03_monitoring_traces.png",
+        "LangSmith · Monitoring / Traces: evolución temporal de trazas, latencia P50/P99 y tasa de error.",
+    ),
+    (
+        "captura_langsmith_04_monitoring_llm_calls.png",
+        "LangSmith · Monitoring / LLM Calls: número y latencia de las llamadas al modelo, con tasa de error.",
+    ),
+    (
+        "captura_langsmith_05_monitoring_tools.png",
+        "LangSmith · Monitoring / Tools: uso, latencia mediana y tasa de error por herramienta.",
+    ),
+    (
+        "captura_langsmith_06_monitoring_run_types.png",
+        "LangSmith · Monitoring / Run Types: conteo y latencia por tipo de ejecución (AgentExecutor y planificador).",
+    ),
+    (
+        "captura_langsmith_07_monitoring_cost_tokens.png",
+        "LangSmith · Monitoring / Cost & Tokens: costo total $0, tokens de salida y percentiles por traza.",
     ),
 ]
 

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-23T01:41:59.649648+00:00",
+  "generated_at": "2026-11-23T01:47:28.130692+00:00",
   "runs": [
     [
       "real-router-20261119",
@@ -288,6 +288,10 @@
     "captura_dashboard_seguridad.jpeg",
     "captura_langsmith_01_overview.png",
     "captura_langsmith_02_tracing.png",
-    "captura_langsmith_03_monitoring.png"
+    "captura_langsmith_03_monitoring_traces.png",
+    "captura_langsmith_04_monitoring_llm_calls.png",
+    "captura_langsmith_05_monitoring_tools.png",
+    "captura_langsmith_06_monitoring_run_types.png",
+    "captura_langsmith_07_monitoring_cost_tokens.png"
   ]
 }
