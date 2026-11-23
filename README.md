@@ -1,12 +1,171 @@
-# AgroID Huevos - Agente de gestión de inventario
+# AgroID Huevos — Agente de inventario con observabilidad
 
-Proyecto de la Evaluación Parcial 2 de ISY0101. El cuaderno implementa un agente conversacional en español para consultar y actualizar inventario de huevos, revisar pedidos, calcular déficits, priorizar entregas y recuperar información de un manual.
+Proyecto de las Evaluaciones Parciales 2 y 3 de ISY0101. El agente conversacional en español consulta y actualiza inventario de huevos, revisa pedidos, calcula déficits, prioriza entregas y recupera información de un manual. La EP3 añade observabilidad con LangSmith, logs JSON, dashboard Streamlit, evaluación automatizada y controles de seguridad.
 
 **Integrantes:** Esteban Pacheco Vega y Javier Perez Mora  
 **Sección:** 007D  
-**Punto de entrada:** [`AgroID_Huevos_Agente_EP2.ipynb`](AgroID_Huevos_Agente_EP2.ipynb)
+**Paquete EP3:** [`agroid/`](agroid/)  
+**Dashboard:** `streamlit run agroid/dashboard/app.py`  
+**Notebook EP2 (base histórica):** [`AgroID_Huevos_Agente_EP2.ipynb`](AgroID_Huevos_Agente_EP2.ipynb)
 
-> Esta carpeta contiene una implementación basada en notebook para Google Colab. Los datos de inventario son simulados. No usar para gestionar una operación avícola real sin validación de datos, reglas y contenido técnico.
+> Datos de inventario simulados. No usar para gestionar una operación avícola real sin validar datos, reglas y contenido técnico.
+
+## EP3 · Observabilidad
+
+### Qué incluye
+
+- **Trazabilidad:** LangSmith como fuente principal; `session_id`, `trace_id`, `run_id`/`span_id` y `parent_run_id`/`parent_span_id`. Respaldo local en JSONL y SQLite.
+- **Métricas:** precisión de herramientas y argumentos, hechos, *groundedness*, consistencia ante reformulaciones, errores, latencia P50/P95, TTFT, tokens/s, tokens y costo real vs. equivalente.
+- **Auditoría:** detección de bucles, `max_iterations`, deriva de contexto, cambios de modelo y cuellos de botella.
+- **Dashboard:** seis pestañas (Resumen, Rendimiento, Calidad, Costos, Explorador de trazas, Seguridad) con waterfall de spans.
+- **Seguridad:** anonimización de PII, mitigación de *prompt injection*, *rate limiting*, integridad SHA-256/HMAC del manual, moderación y bloqueo de fuga del *system prompt*.
+- **Evaluación:** suite de 28 turnos reales (router libre vs modelo fijado, consistencia, sesgo y validación posterior) + carga simulada.
+
+### Resultados de la corrida piloto (19-nov-2026)
+
+| Corrida | Turnos | Éxito | Score | Tool match | Groundedness | Modelos | Cambios de modelo |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Router `openrouter/free` | 8 | 8/8 | 0,931 | 0,854 | 0,896 | 10 | 7/8 trazas |
+| Modelo fijado `ling-3.2-flash:free` | 6 | 6/6 | 1,000* | 1,000 | 1,000 | 1 | 0/6 |
+| Consistencia | 6 | 6/6 | 0,994 | 1,000 | 0,938 | 1 | Jaccard 1,0 |
+| Sesgo | 4 | 4/4 | 1,000 | 1,000 | 1,000 | 1 | misma herramienta |
+| Post-fix | 4 | 4/4 | 0,978 | 1,000 | 0,779 | 1 | “4–7 °C” no respaldado |
+| **Total real** | **29** | **29/29** | **0,970** | **0,943** | **0,926** | — | 139.773 tokens |
+| Carga simulada 40/5 | 40 | 40/40 | — | — | — | — | P95 921 ms |
+
+\* El score inicial fue 0,733; la auditoría detectó dos falsos negativos del evaluador (clave semánticamente equivalente y rechazo seguro sin herramienta) y se corrigieron en `benchmarks/rescore.py`. La corrida fijada original usó `ling-3.2-flash:free`; para las suites restantes se adoptó `nvidia/nemotron-3.5-lightning:free` porque `ling` presentó 429 y `cohere/north-mini-code:free` dejó de estar disponible (404).
+
+### Arquitectura
+
+```mermaid
+flowchart LR
+    U[Usuario] --> C[run_turn]
+    C --> SEG[PII · inyección · moderación · rate limit]
+    SEG --> A[AgentExecutor ReAct]
+    A --> L[LLM OpenRouter]
+    A --> T[10 herramientas]
+    T --> DB[(SQLite negocio)]
+    T --> R[RAG manual + SHA-256]
+    A --> CB[Callback]
+    CB --> J[JSONL]
+    CB --> O[(SQLite observabilidad)]
+    A --> LS[LangSmith]
+    LS --> E[Exportador]
+    E --> O
+    O --> D[Streamlit]
+```
+
+Ver [`docs/ARQUITECTURA_EP3.md`](docs/ARQUITECTURA_EP3.md) para el detalle de spans, tablas y controles.
+
+### Instalación local
+
+Requiere Python 3.11–3.14. En Windows:
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+Copy-Item .env.example .env
+notepad .env
+```
+
+Completa en `.env`:
+
+```env
+LLM_API_KEY=...              # OpenRouter
+LANGSMITH_API_KEY=...        # LangSmith
+LLM_MODEL=openrouter/free
+LLM_MODEL_PINNED=nvidia/nemotron-3.5-lightning:free
+LANGSMITH_PROJECT=agroid-huevos-ep3
+```
+
+`.env` está en `.gitignore`. Nunca subas claves al repositorio ni las pegues en el chat.
+
+### Comandos
+
+| Comando | Qué hace |
+|---|---|
+| `python -m agroid.cli status` | Muestra configuración segura (sin claves) |
+| `python -m agroid.cli smoke` | Verifica base, RAG, LangSmith y rate limiter |
+| `python -m agroid.cli demo` | Demo con LLM simulado, sin red ni costo |
+| `python -m agroid.benchmarks.run --mode sim --suite golden` | Suite funcional simulada |
+| `python -m agroid.benchmarks.run --mode real --suite router --model openrouter/free` | 8 turnos con router libre |
+| `python -m agroid.benchmarks.run --mode real --suite pinned --model nvidia/nemotron-3.5-lightning:free` | 6 turnos con modelo fijado |
+| `python -m agroid.benchmarks.load --requests 40 --workers 5` | Carga simulada y contención SQLite |
+| `python -m agroid.benchmarks.ttft --model nvidia/nemotron-3.5-lightning:free --repetitions 2` | TTFT, tokens/s y ms/token con streaming |
+| `python -m agroid.benchmarks.export` | Exporta trazas de LangSmith a JSONL/SQLite |
+| `python -m agroid.benchmarks.rescore --run-id <run_id>` | Recalcula métricas con el evaluador corregido |
+| `python -m agroid.benchmarks.results` | Consolida resultados en CSV, JSON y Markdown |
+| `streamlit run agroid/dashboard/app.py` | Abre el dashboard; usa `?solo_reales=1&sin_errores=1` para una vista limpia |
+
+### Cuota de modelos gratuitos
+
+OpenRouter limita los modelos `:free` a **20 solicitudes/minuto** y **50 solicitudes/día** si se compraron menos de 10 créditos; con al menos 10 créditos son 1.000/día. Cada turno consume 2–4 llamadas, así que las 28 corridas se reparten en 2–3 días. El runner consulta `GET /api/v1/key` y se detiene antes de agotar la cuota.
+
+### Seguridad y privacidad
+
+- PII (RUT, email, teléfono, tarjetas) se redacta **antes** del LLM, LangSmith, logs e historial.
+- Inyección: patrones ponderados + delimitadores + política de herramientas + bloqueo de salida con fuga del prompt.
+- Rate limiting por sesión y global; 8 iteraciones; 3 escrituras por turno; 2.000 caracteres de entrada.
+- Manual con manifiesto SHA-256 y HMAC opcional (`AGROID_MANIFEST_HMAC_KEY`).
+- Eventos de seguridad en SQLite y pestaña “Seguridad”.
+
+### Pruebas
+
+```powershell
+python tests/test_security.py
+python tests/test_observability.py
+python tests/test_tools.py
+python tests/test_evaluator.py
+python tests/test_agent_sim.py
+```
+
+Cada archivo configura sus propios directorios temporales y desactiva LangSmith, por lo que las pruebas no consumen cuota. También puedes ejecutar todo con `python tests/run_all.py`.
+
+### Estructura EP3
+
+```text
+agroid/
+  config.py, db.py, rag.py, tools.py, agent.py, cli.py
+  observability/   # LangSmith, JSONL, SQLite, callbacks, métricas, detectores
+  security/        # PII, inyección, rate limit, integridad, moderación
+  benchmarks/      # casos, runner, carga, TTFT, exportación, LLM simulado
+  dashboard/app.py # Streamlit
+data/              # manual.json, manual_manifest.json (sin bases)
+docs/              # informe EP3, arquitectura, matriz, evidencias
+tests/             # pruebas de seguridad, observabilidad, tools y agente
+```
+
+### Documentos EP3
+
+- [`docs/INFORME_TECNICO_EP3.md`](docs/INFORME_TECNICO_EP3.md): informe editable (máximo 5 páginas al exportar).
+- [`docs/INFORME_TECNICO_EP3.pdf`](docs/INFORME_TECNICO_EP3.pdf): versión PDF generada (4 páginas en la última compilación).
+- [`docs/DECLARACION_USO_IA.md`](docs/DECLARACION_USO_IA.md): declaración transparente de uso de IA y referencia Duoc UC.
+- [`docs/generar_informe_pdf.py`](docs/generar_informe_pdf.py): convierte el Markdown en PDF y avisa si supera 5 páginas.
+- [`docs/ARQUITECTURA_EP3.md`](docs/ARQUITECTURA_EP3.md): componentes, jerarquía de spans y modelo de datos.
+- [`docs/MATRIZ_CUMPLIMIENTO_EP3.md`](docs/MATRIZ_CUMPLIMIENTO_EP3.md): correspondencia IE1–IE8 con evidencia.
+- [`docs/PLAN_CORRIDAS_REALES.md`](docs/PLAN_CORRIDAS_REALES.md): calendario de las suites restantes y control de cuota.
+- [`docs/evidencias/RESULTADOS_CORRIDAS.md`](docs/evidencias/RESULTADOS_CORRIDAS.md): resultados consolidados con las capturas del dashboard.
+- [`docs/evidencias/ANEXO_EVIDENCIAS.pdf`](docs/evidencias/ANEXO_EVIDENCIAS.pdf): anexo visual con resumen y seis capturas del tablero.
+- [`docs/evidencias/resultados_turnos.csv`](docs/evidencias/resultados_turnos.csv): una fila por turno evaluado.
+- [`docs/evidencias/resultados_consolidados.json`](docs/evidencias/resultados_consolidados.json): métricas, consistencia, sesgo, TTFT, carga e incidentes.
+- [`docs/evidencias/README.md`](docs/evidencias/README.md): cómo generar y sanitizar la evidencia.
+- [`docs/generar_anexo_evidencias.py`](docs/generar_anexo_evidencias.py): genera el anexo PDF con las capturas.
+
+### Limitaciones EP3
+
+- `openrouter/free` enruta aleatoriamente entre modelos gratuitos; la corrida con router es un experimento de variabilidad, no la base de consistencia.
+- El costo real es $0 en modelos gratuitos; el costo equivalente es una estimación con un modelo pagado de referencia.
+- El rate limiter es en memoria; en producción debería usar Redis.
+- SQLite con WAL no reemplaza PostgreSQL para múltiples réplicas.
+- TF-IDF es el respaldo cuando los embeddings no están disponibles; no es búsqueda semántica.
+- Las reflexiones individuales del informe deben ser redactadas por cada integrante sin IA.
+
+---
+
+# Agente EP2 (base histórica)
+
+El cuaderno implementa el agente original de la Evaluación Parcial 2. Se conserva como línea base y evidencia de continuidad; la implementación EP3 vive en `agroid/`.
 
 ## Funcionalidades
 

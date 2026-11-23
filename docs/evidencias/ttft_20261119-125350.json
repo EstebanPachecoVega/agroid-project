@@ -1,0 +1,44 @@
+[
+  {
+    "model": "inclusionai/ling-3.2-flash:free",
+    "runs": [
+      {
+        "status": "error",
+        "error": "OpenAIRateLimitError: Error code: 429 - Provider returned error"
+      },
+      {
+        "status": "error",
+        "error": "OpenAIRateLimitError: Error code: 429 - Provider returned error"
+      }
+    ],
+    "prompt": "Explica en dos frases cómo se calcula el déficit de huevos pendientes."
+  },
+  {
+    "model": "inclusionai/ling-3.2-flash:free",
+    "runs": [
+      {
+        "status": "error",
+        "error": "OpenAIRateLimitError: Error code: 429 - Provider returned error"
+      },
+      {
+        "status": "error",
+        "error": "OpenAIRateLimitError: Error code: 429 - Provider returned error"
+      }
+    ],
+    "prompt": "Resume qué recomienda el manual sobre almacenar huevos de codorniz."
+  },
+  {
+    "model": "inclusionai/ling-3.2-flash:free",
+    "runs": [
+      {
+        "status": "error",
+        "error": "OpenAIRateLimitError: Error code: 429 - Provider returned error"
+      },
+      {
+        "status": "error",
+        "error": "OpenAIRateLimitError: Error code: 429 - Provider returned error"
+      }
+    ],
+    "prompt": "Enumera tres pasos para priorizar pedidos por fecha límite."
+  }
+]

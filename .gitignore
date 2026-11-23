@@ -1,0 +1,36 @@
+# Entorno y credenciales
+.venv/
+.env
+.env.*
+!.env.example
+*.pem
+
+# Datos locales y trazas
+data/*.db
+data/*.db-*
+data/*.sqlite
+data/*.sqlite-*
+logs/
+datos_agroid/
+
+# Evidencia cruda (se exporta y revisa antes de commitear)
+docs/evidencias/*.jsonl
+docs/evidencias/*.csv
+!docs/evidencias/resultados_turnos.csv
+docs/evidencias/*.db
+docs/evidencias/*.log
+docs/evidencias/progress_*.json
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Streamlit
+.streamlit/
+
+# Sistema
+.DS_Store
+Thumbs.db

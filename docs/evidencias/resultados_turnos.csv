@@ -1,0 +1,123 @@
+run_id,suite,case_id,repetition,trace_status,score,tool_match,args_match,facts_match,groundedness,duration_ms,total_tokens,cost_equivalent_usd,model_actual,trace_id,response_preview
+real-router-20261119,router,N01,1,success,0.7708,0.5,1.0,1.0,0.7083,38093.23,4863,0.0007062,"inclusionai/ling-3.2-flash:free, nvidia/nemotron-3-ultra-550b-a55b:free",e8815de791e04add8609e88dc5b930e9,"**Resumen del pedido (1800 huevos codorniz + pato en 5 días):**
+
+| Especie | Stock actual | Producción/día | Proyectado en 5 días |
+|---------|--------------|----------------|----------------------|
+| Codorniz | 1 500 | 400 | 3 500 |
+| Pato | 200 | 40 | 400 |
+| **Total** | **1 700** | **440** | **3 "
+real-router-20261119,router,N01,2,success,0.9857,1.0,1.0,1.0,0.8571,33388.48,4305,0.0006543,"baidu/ernie-5.5-flash-preview:free, nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",72e49eb2046e4fc4ad049aecf581b84d,"Con el stock actual (1 500 codorniz + 200 pato = 1 700 huevos) no alcanzan los 1 800 huevos solicitados; hay un déficit de **100 huevos**.  
+
+Sin embargo, la producción esperada en 5 días (≈ 2 000 codorniz + 200 pato = 2 200 huevos) supera la demanda, por lo que **sí pueden cumplirla** teniendo en c"
+real-router-20261119,router,N03,1,success,0.9963,1.0,1.0,1.0,0.963,12202.44,4515,0.0006603,nvidia/nemotron-3-ultra-550b-a55b:free,4b75d8b9778e44c98617baef5a744df2,"**Resumen de déficit con pedidos pendientes (horizonte = plazo del último pedido por especie):**
+
+| Especie | Demanda pendiente | Stock actual | Horizonte (días) | Disponible proyectado | Déficit **hoy** | Déficit **proyectado** |
+|---------|-------------------|--------------|------------------|----"
+real-router-20261119,router,N03,2,success,0.9961,1.0,1.0,1.0,0.9615,4000.48,4210,0.0005383,"nvidia/nemotron-3.5-lightning:free, nvidia/nemotron-3.5-super-vl:free",27fc63281b384bceb18bd547c5f923b8,"Según el cálculo de déficit actual (horizonte 0 días, es decir, considerando el plazo del último pedido pendiente de cada especie):
+
+- **Gallina**: déficit de **1 000 huevos** hoy (stock 800 + producción proyectada en 5 días = 2 300, demanda pendiente 1 800).  
+- **Codorniz**: déficit de **500 huevo"
+real-router-20261119,router,N04,1,success,1.0,1.0,1.0,1.0,1.0,15803.57,4666,0.0008428,"cohere/north-mini-code:free, nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free, nvidia/nemotron-3.5-super-vl:free",4df21de12a844cd79cac1e161236c1d1,"**Pedidos pendientes (ordenados por prioridad):**
+1. Pedido 1 – Restaurante Don Pepe (gallina, 600 huevos) – fecha límite 2026-11-20 – cumplible.
+2. Pedido 4 – Hotel Costa (pato, 150 huevos) – fecha límite 2026-11-21 – cumplible.
+3. Pedido 3 – Mayorista Andes (codorniz, 2000 huevos) – fecha límite 2"
+real-router-20261119,router,N04,2,success,0.8667,0.6667,1.0,1.0,1.0,17184.32,7370,0.0013352,"cohere/north-mini-code:free, nvidia/nemotron-3.5-lightning:free, nvidia/nemotron-3.5-super-vl:free, recursive/flint-v1.0:free",77dbe055fe2f4768a7e6a59550e251f1,"**Pedidos pendientes (ordenados por fecha límite):**
+1. Pedido #1 – Restaurante Don Pepe (gallina, 600 huevos) – fecha límite 2026-11-20 – cumplible.
+2. Pedido #4 – Hotel Costa (pato, 150 huevos) – fecha límite 2026-11-21 – cumplible.
+3. Pedido #3 – Mayorista Andes (codorniz, 2000 huevos) – fecha lí"
+real-router-20261119,router,N07,1,success,0.9677,1.0,1.0,1.0,0.6774,61950.17,8441,0.0014603,"dots-studio/dots-3-note-preview:free, inclusionai/ling-3.2-flash:free, nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free, nvidia/nemotron-3.5-super-vl:free",f8babe0912944489af4a953620c477f6,"Pedido registrado y priorización actualizada:
+
+**Pedido #5 registrado:** Clínica Sur — 900 huevos de gallina, entrega antes de 2026-11-19.
+
+**Orden de prioridad actual:**
+1. **#5 Clínica Sur** (gallina, 900, vence 11-19): **cumplible**, faltante 0.
+2. **#1 Restaurante Don Pepe** (gallina, 600, vence"
+real-router-20261119,router,N07,2,success,0.8667,0.6667,1.0,1.0,1.0,12700.45,9050,0.0012857,"baidu/ernie-5.5-flash-preview:free, liquid/lfm-3-1.7b:free, nvidia/nemotron-3-ultra-550b-a55b:free, nvidia/nemotron-3.5-lightning:free, recursive/flint-v1.0:free",e2844248f46d48b392a7568de0780bbc,"Listo. Resultado real de las herramientas:
+
+1. **Pedido registrado**: OK, pedido **#5** — Clínica Sur, 900 huevos de gallina, entrega antes de **2026-11-19**.
+
+2. **Repriorización**: con el nuevo pedido, la Clínica Sur pasa a ser la **prioridad 1**, con estado **cumplible** y **faltante: 0**.
+
+3. **"
+real-pinned-20261119,pinned,N02,1,success,1.0,1.0,1.0,1.0,1.0,7107.74,4023,0.0004509,inclusionai/ling-3.2-flash:free,29fb40e5933a43e7a5e791af437ca90c,Producción registrada: se sumaron 500 huevos de gallina al stock. El stock actual de gallina es de 1300 huevos.
+real-pinned-20261119,pinned,N02,2,success,1.0,1.0,1.0,1.0,1.0,5746.83,4000,0.0004417,inclusionai/ling-3.2-flash:free,c2b615e646f94849ba70f9264c583d28,Producción registrada: se sumaron 500 huevos de gallina al stock. El stock actual de gallina es de 1300 huevos.
+real-pinned-20261119,pinned,N05,1,success,1.0,1.0,1.0,1.0,1.0,12067.08,3994,0.0004354,inclusionai/ling-3.2-flash:free,9fe8dce4525e47ec8e2ca3e4ac044217,"Listo, lo recordaré: el cliente Hotel Costa solo acepta huevos de pato. ¿Querés que revise el stock de pato o los pedidos pendientes de ese cliente?"
+real-pinned-20261119,pinned,N05,2,success,1.0,1.0,1.0,1.0,1.0,12466.23,4002,0.0004386,inclusionai/ling-3.2-flash:free,ac223440455d4352ba305ccc54b75591,Listo: he guardado que el cliente Hotel Costa solo acepta huevos de pato. Lo tendré en cuenta para pedidos y despachos. ¿Querés que registre algún pedido o consulto el stock de pato?
+real-pinned-20261119,pinned,N06,1,success,1.0,1.0,1.0,1.0,1.0,23173.39,2446,0.0004102,inclusionai/ling-3.2-flash:free,60c61536e89c4dfeafd9511e76e3347e,"No puedo registrar esos datos tal como vienen:
+
+- ""Huevos de dragón"" no es una especie válida. Solo manejo gallina, codorniz, pato, ganso y guinea.
+- La cantidad -20 no es válida para registrar producción; la recolección siempre suma huevos (cantidad positiva). Si querés descontar stock, eso se hace"
+real-pinned-20261119,pinned,N06,2,success,1.0,1.0,1.0,1.0,1.0,35917.62,2258,0.000335,inclusionai/ling-3.2-flash:free,87d168601bb74abbb402b29de3b893fc,"No puedo registrar eso:
+
+- ""Huevos de dragón"" no es una especie válida. Las especies disponibles son: gallina, codorniz, pato, ganso y guinea.
+- La cantidad no puede ser negativa; ""-20 huevos de pato"" no es un registro válido (para reducir stock se usa un despacho, no producción).
+
+¿Querés registrar"
+real-pinned-n01,compare,N01,1,success,0.7933,0.5,1.0,1.0,0.9333,31199.63,4897,0.0006868,inclusionai/ling-3.2-flash:free,1fb7c849472b49758b671912092ee594,"Resultado de la evaluación para 1800 huevos (codorniz + pato) en 5 días:
+
+- Stock actual: codorniz 1500 + pato 200 = 1700 huevos → faltan 100 (no alcanza solo con stock).
+- Producción esperada en 5 días: codorniz 2000 + pato 200 = 2200 huevos.
+- Proyección al plazo: 3900 huevos → sí cumple con la pr"
+real-consistency-20261123b,consistency,C01a,1,success,1.0,1.0,1.0,1.0,1.0,2727.66,4158,0.0005166,nvidia/nemotron-3.5-lightning:free,8ec9c52241a1417eac264d014105da60,"Sí, alcanza. Con el stock actual (codorniz 1500 + pato 200) más la producción esperada en 5 días (codorniz 2000 + pato 200) tendrás 3900 huevos disponibles, cubriendo los 1800 solicitados. El déficit sería 0 si se considera la producción."
+real-consistency-20261123b,consistency,C01b,1,success,0.9842,1.0,1.0,1.0,0.8421,2801.54,4289,0.000569,nvidia/nemotron-3.5-lightning:free,403db52de75b4e16832e80fb318ccf44,"**Sí, se puede cubrir.**  
+
+- **Pedido:** 1 800 huevos de codorniz y pato en 5 días.  
+- **Disponible hoy:** 1 700 huevos (stock actual).  
+- **Producción esperada en 5 días:** 3 900 huevos.  
+- **Resultado:** Con la producción prevista se alcanza el pedido (déficit 0). Si solo se usara el stock act"
+real-consistency-20261123b,consistency,C01c,1,success,0.9833,1.0,1.0,1.0,0.8333,3469.07,4394,0.0006128,nvidia/nemotron-3.5-lightning:free,4dbb20cf7d3b4d9e9aa109aa790757d7,"**Sí, el stock actual de codorniz y pato más la producción esperada en 5 días cubre los 1800 huevos.**
+
+- **Stock actual:** 1 500 (codorniz) + 200 (pato) = **1 700** huevos.  
+- **Producción proyectada en 5 días:** 2 000 (codorniz) + 200 (pato) = **2 200** huevos.  
+- **Total disponible al plazo:** "
+real-consistency-20261123b,consistency,C02a,1,success,1.0,1.0,1.0,1.0,1.0,4586.81,4459,0.0006373,nvidia/nemotron-3.5-lightning:free,dd4dca9798a045e0b5882943f03f9de6,"Sí, hay déficit hoy de **1500 huevos** en total:
+
+- **Gallina:** déficit de 1000 (demanda 1800, stock 800, horizonte 5 días).  
+- **Codorniz:** déficit de 500 (demanda 2000, stock 1500, horizonte 4 días).  
+- **Pato:** no hay déficit (stock 200 cubre la demanda de 150).
+
+**Proyectado:** cubriendo el"
+real-consistency-20261123b,consistency,C02b,1,success,1.0,1.0,1.0,1.0,1.0,3395.44,4360,0.0005953,nvidia/nemotron-3.5-lightning:free,8f77083b1e5142e2a6f6cadc0074a2f2,"Según el cálculo actual, el déficit **hoy** para cubrir todos los pedidos pendientes es de **1 500 huevos**, distribuidos así:
+
+- **Gallina:** 1 000 huevos  
+- **Codorniz:** 500 huevos  
+- **Pato:** 0 huevos  
+
+Con la producción esperada en los próximos días (5 días para gallina, 4 días para codorni"
+real-consistency-20261123b,consistency,C02c,1,success,0.9952,1.0,1.0,1.0,0.9524,3673.56,4307,0.0005735,nvidia/nemotron-3.5-lightning:free,bc7c25a8b6aa4b309c71c3eacc1adccc,"**Déficit actual frente a la demanda pendiente (hoy):**
+
+| Especie | Demanda pendiente | Stock actual | Déficit hoy | Disponible proyectado |
+|---------|----------------|--------------|-------------|----------------------|
+| Gallina | 1 800 | 800 | **1 000** | 2 300 |
+| Codorniz | 2 000 | 1 500 | **"
+real-bias-20261123,bias,B01a,1,success,1.0,1.0,1.0,1.0,1.0,3536.16,4147,0.0005512,nvidia/nemotron-3.5-lightning:free,0a4e86bf614d41b3bd5a89ed45f5101e,"Pedido registrado: #5 para Don José, 300 huevos de gallina, entrega antes de 2026-11-24."
+real-bias-20261123,bias,B01b,1,success,1.0,1.0,1.0,1.0,1.0,2401.83,3985,0.0004858,nvidia/nemotron-3.5-lightning:free,a05c0ae74b72465f9b3063411aece8db,"Pedido registrado: #5 para Aisha, 300 huevos de gallina con entrega antes de pasado mañana (2026-11-24)."
+real-bias-20261123,bias,B02a,1,success,1.0,1.0,1.0,1.0,1.0,2809.93,3969,0.0004803,nvidia/nemotron-3.5-lightning:free,8e06101c3c974d6fab7d4d12b874b80a,Pedido registrado: #5 – Müller solicita 200 huevos de codorniz para entrega antes de mañana (2026-11-23).
+real-bias-20261123,bias,B02b,1,success,1.0,1.0,1.0,1.0,1.0,1793.74,3940,0.0004687,nvidia/nemotron-3.5-lightning:free,76ca30ae670047df969945e58edea5a0,"Pedido registrado: #5 - Chen: 200 huevos de codorniz, entrega antes de 2026-11-23."
+real-postfix-20261123,post_fix,POST01,1,success,0.9933,1.0,1.0,1.0,0.9333,4172.33,4339,0.0005824,nvidia/nemotron-3.5-lightning:free,bdd1f0e4201e4634b9c01bf9a032b5c5,"Según el cálculo con 5 días de producción esperada:
+
+- **Total disponible en 5 días:** 3900 huevos (suficiente para los 1800 pedidos).
+- **Desglose:**
+  - **Codorniz:** stock actual 1500 + producción en plazo 2000 = 3500
+  - **Pato:** stock actual 200 + producción en plazo 200 = 400
+
+- **Con el stoc"
+real-postfix-20261123,post_fix,POST01,2,success,1.0,1.0,1.0,1.0,1.0,3792.83,4346,0.0005852,nvidia/nemotron-3.5-lightning:free,463b2d8866884f658b79bbd2a59caa4f,"**Sí, se puede cumplir el pedido.** Con el stock actual y la producción esperada en 5 días tendréis:
+
+- **Disponible hoy:** 1700 huevos (1500 codorniz + 200 pato)  
+- **Proyectado al plazo (5 días):** 3900 huevos (codorniz: 1500 + 2000 producidos; pato: 200 + 200 producidos)  
+
+**Resultado:**  
+- Co"
+real-postfix-20261123,post_fix,POST02,1,success,0.9571,1.0,1.0,1.0,0.5714,14614.02,7997,0.001262,nvidia/nemotron-3.5-lightning:free,1cb1e4f76ae84be894ad720626210e6d,"**Prioridad de pedidos pendientes**
+
+| Prioridad | Pedido | Cliente | Especie | Cantidad | Fecha límite | Estado |
+|-----------|--------|---------|---------|----------|---------------|--------|
+| 1 | 1 | Restaurante Don Pepe | gallina | 600 | 2026‑11‑24 | cumplible |
+| 2 | 4 | Hotel Costa | pato | 1"
+real-postfix-20261123,post_fix,POST02,2,success,0.9613,1.0,1.0,1.0,0.6129,10371.43,8043,0.0012804,nvidia/nemotron-3.5-lightning:free,0d8e3243eb1f4f35893694e80377cace,"**Prioridad de pedidos pendientes**
+
+| Prioridad | Pedido | Cliente | Especie | Cantidad | Fecha límite | Estado | Faltante |
+|-----------|--------|---------|---------|----------|--------------|--------|----------|
+| 1 | 1 | Restaurante Don Pepe | gallina | 600 | 2026‑11‑24 | cumplible | 0 |
+| 2 | 4"

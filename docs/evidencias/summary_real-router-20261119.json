@@ -1,0 +1,13 @@
+{
+  "traces": 64,
+  "success_rate": 0.9688,
+  "error_rate": 0.0,
+  "blocked_rate": 0.0312,
+  "latency_p50_ms": 208.81,
+  "latency_p95_ms": 16977.207499999993,
+  "total_tokens": 103206,
+  "cost_usd": 0.0,
+  "cost_equivalent_usd": 0.0136836,
+  "avg_tokens": 1612.6,
+  "model_switches": 8
+}

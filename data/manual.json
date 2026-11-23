@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "descripcion": "Manual interno de referencia para AgroID Huevos. Los valores son referenciales y deben validarse con fuentes avícolas antes de un uso operativo.",
+  "fragments": [
+    {
+      "id": "M01",
+      "tema": "almacenamiento gallina",
+      "texto": "Almacenamiento de huevos de gallina: refrigerados entre 4 y 7 °C mantienen buena calidad unas 4 a 5 semanas. No lavar antes de guardar y rotar el inventario con la regla primero en entrar, primero en salir."
+    },
+    {
+      "id": "M02",
+      "tema": "almacenamiento codorniz",
+      "texto": "Almacenamiento de huevos de codorniz: tienen cáscara más fina y frágil. Refrigerados duran hasta unas 6 semanas. Usar bandejas pequeñas y manipular con cuidado para evitar fisuras."
+    },
+    {
+      "id": "M03",
+      "tema": "equivalencias por peso",
+      "texto": "Equivalencias por peso entre especies: gallina 55-60 g; codorniz 10-12 g (unos 5 de codorniz equivalen a 1 de gallina); pato 70-80 g (1 de pato equivale a 1,3 de gallina); ganso 140-200 g (1 de ganso equivale a 3 de gallina); guinea 38-45 g (1 de gallina equivale a 1,4 de guinea). Sirve para sustituir especies en pedidos por peso o volumen, no en pedidos por unidad."
+    },
+    {
+      "id": "M04",
+      "tema": "tasas de postura",
+      "texto": "Tasas de postura referenciales: gallina ponedora 250-300 huevos al año; codorniz 250-300; pato 150-250; gallina de guinea 80-150 con fuerte estacionalidad (primavera y verano); ganso 20-60 y muy estacional. Producción diaria esperada = número de aves en postura por la tasa diaria de la especie."
+    },
+    {
+      "id": "M05",
+      "tema": "planificación de pedidos",
+      "texto": "Planificación de pedidos grandes: priorizar por fecha límite y luego por tamaño. Cubrir primero con stock, luego con la producción proyectada hasta la fecha de entrega. Si hay déficit: proponer sustitución de especie si el cliente la acepta, entrega parcial negociada o compra a un proveedor externo."
+    },
+    {
+      "id": "M06",
+      "tema": "stock de seguridad",
+      "texto": "Stock de seguridad y reposición: mantener un colchón equivalente a 2 o 3 días de demanda promedio por especie. Revisar el déficit cada vez que se registra producción o ingresa un pedido nuevo."
+    },
+    {
+      "id": "M07",
+      "tema": "higiene y bioseguridad",
+      "texto": "Higiene y bioseguridad: los huevos de pato y ganso tienen mayor riesgo de contaminación por contacto con agua y barro. Limpiar en seco, descartar huevos fisurados o sucios y no mezclar lotes de distintos días."
+    },
+    {
+      "id": "M08",
+      "tema": "clasificación y calidad",
+      "texto": "Clasificación y calidad: revisar a contraluz (ovoscopía), descartar fisurados y clasificar por tamaño. Los huevos de ganso y pato no caben en bandejas estándar de gallina y se despachan en envases propios."
+    },
+    {
+      "id": "M09",
+      "tema": "incubación versus venta",
+      "texto": "Incubación versus venta: los huevos destinados a incubar se separan del stock de venta. Días de incubación aproximados: gallina 21, codorniz 17-18, pato 28, ganso 28-30, guinea 26-28."
+    },
+    {
+      "id": "M10",
+      "tema": "registro de producción",
+      "texto": "Registro de producción: anotar la recolección diaria por especie y compararla con la producción esperada. Una caída sostenida puede indicar estrés por calor, muda, falta de luz o problemas de alimentación."
+    }
+  ]
+}

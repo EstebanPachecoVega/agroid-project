@@ -1,0 +1,290 @@
+{
+  "generated_at": "2026-11-23T00:51:03.703483+00:00",
+  "runs": [
+    [
+      "real-router-20261119",
+      "Router libre",
+      "router"
+    ],
+    [
+      "real-pinned-20261119",
+      "Modelo fijado (ling)",
+      "pinned"
+    ],
+    [
+      "real-pinned-n01",
+      "Comparación N01 fijado",
+      "compare"
+    ],
+    [
+      "real-consistency-20261123b",
+      "Consistencia",
+      "consistency"
+    ],
+    [
+      "real-bias-20261123",
+      "Sesgo",
+      "bias"
+    ],
+    [
+      "real-postfix-20261123",
+      "Post-fix",
+      "post_fix"
+    ]
+  ],
+  "excluded_runs": [
+    [
+      "real-consistency-20261123",
+      "Intento de consistencia con 429 del proveedor"
+    ]
+  ],
+  "summaries": [
+    {
+      "run_id": "real-router-20261119",
+      "label": "Router libre",
+      "suite": "router",
+      "turns": 8,
+      "success": 8,
+      "score": 0.9313,
+      "tool_match": 0.8542,
+      "args_match": 1.0,
+      "facts_match": 1.0,
+      "groundedness": 0.8959,
+      "tokens": 47420,
+      "latency_mean_s": 24.42,
+      "latency_max_s": 61.95,
+      "models": [
+        "baidu/ernie-5.5-flash-preview:free",
+        "cohere/north-mini-code:free",
+        "dots-studio/dots-3-note-preview:free",
+        "inclusionai/ling-3.2-flash:free",
+        "liquid/lfm-3-1.7b:free",
+        "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+        "nvidia/nemotron-3-ultra-550b-a55b:free",
+        "nvidia/nemotron-3.5-lightning:free",
+        "nvidia/nemotron-3.5-super-vl:free",
+        "recursive/flint-v1.0:free"
+      ],
+      "model_switches": 7
+    },
+    {
+      "run_id": "real-pinned-20261119",
+      "label": "Modelo fijado (ling)",
+      "suite": "pinned",
+      "turns": 6,
+      "success": 6,
+      "score": 1.0,
+      "tool_match": 1.0,
+      "args_match": 1.0,
+      "facts_match": 1.0,
+      "groundedness": 1.0,
+      "tokens": 20723,
+      "latency_mean_s": 16.08,
+      "latency_max_s": 35.92,
+      "models": [
+        "inclusionai/ling-3.2-flash:free"
+      ],
+      "model_switches": 0
+    },
+    {
+      "run_id": "real-pinned-n01",
+      "label": "Comparación N01 fijado",
+      "suite": "compare",
+      "turns": 1,
+      "success": 1,
+      "score": 0.7933,
+      "tool_match": 0.5,
+      "args_match": 1.0,
+      "facts_match": 1.0,
+      "groundedness": 0.9333,
+      "tokens": 4897,
+      "latency_mean_s": 31.2,
+      "latency_max_s": 31.2,
+      "models": [
+        "inclusionai/ling-3.2-flash:free"
+      ],
+      "model_switches": 0
+    },
+    {
+      "run_id": "real-consistency-20261123b",
+      "label": "Consistencia",
+      "suite": "consistency",
+      "turns": 6,
+      "success": 6,
+      "score": 0.9938,
+      "tool_match": 1.0,
+      "args_match": 1.0,
+      "facts_match": 1.0,
+      "groundedness": 0.938,
+      "tokens": 25967,
+      "latency_mean_s": 3.44,
+      "latency_max_s": 4.59,
+      "models": [
+        "nvidia/nemotron-3.5-lightning:free"
+      ],
+      "model_switches": 0
+    },
+    {
+      "run_id": "real-bias-20261123",
+      "label": "Sesgo",
+      "suite": "bias",
+      "turns": 4,
+      "success": 4,
+      "score": 1.0,
+      "tool_match": 1.0,
+      "args_match": 1.0,
+      "facts_match": 1.0,
+      "groundedness": 1.0,
+      "tokens": 16041,
+      "latency_mean_s": 2.64,
+      "latency_max_s": 3.54,
+      "models": [
+        "nvidia/nemotron-3.5-lightning:free"
+      ],
+      "model_switches": 0
+    },
+    {
+      "run_id": "real-postfix-20261123",
+      "label": "Post-fix",
+      "suite": "post_fix",
+      "turns": 4,
+      "success": 4,
+      "score": 0.9779,
+      "tool_match": 1.0,
+      "args_match": 1.0,
+      "facts_match": 1.0,
+      "groundedness": 0.7794,
+      "tokens": 24725,
+      "latency_mean_s": 8.24,
+      "latency_max_s": 14.61,
+      "models": [
+        "nvidia/nemotron-3.5-lightning:free"
+      ],
+      "model_switches": 0
+    }
+  ],
+  "overall": {
+    "turns": 29,
+    "success": 29,
+    "score": 0.9696,
+    "tool_match": 0.9425,
+    "args_match": 1.0,
+    "facts_match": 1.0,
+    "groundedness": 0.9257,
+    "tokens": 139773,
+    "cost_equivalent_usd": 0.019882
+  },
+  "consistency": [
+    {
+      "group": "C01",
+      "cases": 3,
+      "tool_consistency": 1.0
+    },
+    {
+      "group": "C02",
+      "cases": 3,
+      "tool_consistency": 1.0
+    }
+  ],
+  "bias": [
+    {
+      "case_id": "B01a",
+      "tools": [
+        "registrar_pedido"
+      ],
+      "score": 1.0,
+      "latency_s": 3.54
+    },
+    {
+      "case_id": "B01b",
+      "tools": [
+        "registrar_pedido"
+      ],
+      "score": 1.0,
+      "latency_s": 2.4
+    },
+    {
+      "case_id": "B02a",
+      "tools": [
+        "registrar_pedido"
+      ],
+      "score": 1.0,
+      "latency_s": 2.81
+    },
+    {
+      "case_id": "B02b",
+      "tools": [
+        "registrar_pedido"
+      ],
+      "score": 1.0,
+      "latency_s": 1.79
+    }
+  ],
+  "ttft": {
+    "samples": 4,
+    "failed": 6,
+    "model": "cohere/north-mini-code:free",
+    "ttft_min_ms": 352.97,
+    "ttft_max_ms": 637.93,
+    "ttft_mean_ms": 459.36,
+    "tokens_per_second_min": 38.8,
+    "tokens_per_second_max": 160.04,
+    "ms_per_token_min": 6.25,
+    "ms_per_token_max": 25.77
+  },
+  "load": {
+    "run_id": "load-20261119-005555",
+    "requests": 40,
+    "workers": 5,
+    "success": 40,
+    "blocked": 0,
+    "exceptions": 0,
+    "tool_errors": 0,
+    "p50_ms": 258.0,
+    "p95_ms": 921.0,
+    "p99_ms": 1566.0,
+    "max_ms": 1575.0,
+    "total_tokens": 41097,
+    "db_path": "C:\\Users\\esteb\\Desktop\\EstebanDev\\agroid-project\\data\\agroid_huevos.db"
+  },
+  "incidents": [
+    {
+      "run_id": "real-consistency-20261123",
+      "status": "rate_limit",
+      "error_type": "provider_rate_limit",
+      "n": 6
+    },
+    {
+      "run_id": "real-consistency-20261120",
+      "status": "rate_limit",
+      "error_type": "provider_rate_limit",
+      "n": 5
+    },
+    {
+      "run_id": "(smoke / sin run_id)",
+      "status": "error",
+      "error_type": "OpenAIModelNotFoundError",
+      "n": 2
+    },
+    {
+      "run_id": "(smoke / sin run_id)",
+      "status": "rate_limit",
+      "error_type": "provider_rate_limit",
+      "n": 1
+    },
+    {
+      "run_id": "test-cohere-20261120",
+      "status": "error",
+      "error_type": "OpenAIModelNotFoundError",
+      "n": 1
+    }
+  ],
+  "screenshots": [
+    "captura_dashboard_resumen.jpeg",
+    "captura_dashboard_rendimiento.jpeg",
+    "captura_dashboard_calidad.jpeg",
+    "captura_dashboard_costos.jpeg",
+    "captura_dashboard_traza_router.jpeg",
+    "captura_dashboard_seguridad.jpeg"
+  ]
+}

@@ -1,0 +1,17 @@
+# AgroID Huevos - EP3
+# Versiones mínimas compatibles con Python 3.11-3.14. Después de instalar,
+# se recomienda congelar el entorno con: pip freeze > requirements.lock.txt
+langchain>=1.4.6,<2
+langchain-core>=1.6.12,<2
+langchain-classic>=1.0.8,<2
+langchain-openai>=1.7.2,<2
+openai>=1.0
+langsmith>=0.15.0,<1
+python-dotenv>=1.0
+numpy>=2.0
+scikit-learn>=1.5
+pandas>=2.2
+plotly>=5.20
+streamlit>=1.40
+nbformat>=5.10
+reportlab>=4

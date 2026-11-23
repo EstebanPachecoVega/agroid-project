@@ -1,0 +1,16 @@
+[
+  {
+    "model": "cohere/north-mini-code:free",
+    "runs": [
+      {
+        "status": "success",
+        "ttft_ms": 463.78,
+        "total_ms": 1341.61,
+        "completion_tokens": 65,
+        "tokens_per_second": 74.05,
+        "ms_per_token": 13.51
+      }
+    ],
+    "prompt": "Resume en dos frases cómo se calcula el déficit de huevos pendientes."
+  }
+]

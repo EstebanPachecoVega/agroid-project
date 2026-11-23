@@ -1,0 +1,44 @@
+[
+  {
+    "model": "cohere/north-mini-code:free",
+    "runs": [
+      {
+        "status": "success",
+        "ttft_ms": 637.93,
+        "total_ms": 1330.3,
+        "completion_tokens": 104,
+        "tokens_per_second": 150.21,
+        "ms_per_token": 6.66
+      }
+    ],
+    "prompt": "Explica en dos frases cómo se calcula el déficit de huevos pendientes."
+  },
+  {
+    "model": "cohere/north-mini-code:free",
+    "runs": [
+      {
+        "status": "success",
+        "ttft_ms": 352.97,
+        "total_ms": 2182.8,
+        "completion_tokens": 71,
+        "tokens_per_second": 38.8,
+        "ms_per_token": 25.77
+      }
+    ],
+    "prompt": "Resume qué recomienda el manual sobre almacenar huevos de codorniz."
+  },
+  {
+    "model": "cohere/north-mini-code:free",
+    "runs": [
+      {
+        "status": "success",
+        "ttft_ms": 382.75,
+        "total_ms": 1907.38,
+        "completion_tokens": 244,
+        "tokens_per_second": 160.04,
+        "ms_per_token": 6.25
+      }
+    ],
+    "prompt": "Enumera tres pasos para priorizar pedidos por fecha límite."
+  }
+]
