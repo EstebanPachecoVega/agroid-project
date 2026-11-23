@@ -106,7 +106,11 @@ El costo real es $0 mientras se usen modelos gratuitos; el “costo equivalente�
 
 La observabilidad permite convertir fallos silenciosos en evidencia: el router gratuito puede cambiar de modelo, las herramientas pueden repetirse, el contexto puede crecer y la latencia puede concentrarse en un span. La combinación LangSmith + JSONL + SQLite permite auditar sin depender de una sola plataforma, y el dashboard traduce las trazas en decisiones de diseño.
 
-**Reflexión individual — Esteban Pacheco Vega.** [Redactar sin IA: qué aprendió sobre instrumentación, trazabilidad y análisis de fallos; qué aportó al proyecto.]
+**Reflexión individual — Esteban Pacheco Vega.** 
+
+Instrumentar el agente me enseñó que la trazabilidad es lo que permite entender por qué una respuesta salió bien o mal. Al revisar trazas y logs descubrí errores que a simple vista pasaban desapercibidos, y aprendí a distinguir un fallo del modelo de uno de la herramienta usando esa evidencia en lugar de adivinar. En el proyecto aporté sobre todo en observabilidad y pruebas, procurando que el dashboard mostrara datos útiles y que los incidentes quedaran registrados.
+
+Lo que más me marcó fue comprobar que las restricciones no están peleadas con un buen resultado: con todas las capas de seguridad activas (detección de inyección, límites de escritura, rate limiting, anonimización de PII), el modelo igual entregó la respuesta deseada en 29 de 29 turnos reales, con un score de 0,970. Eso me dejó claro que se puede ser cuidadoso con la seguridad sin sacrificar la utilidad del agente.
 
 **Reflexión individual — Javier Perez Mora.** [Redactar sin IA: qué aprendió sobre evaluación, seguridad y escalabilidad; qué aportó al proyecto.]
 
