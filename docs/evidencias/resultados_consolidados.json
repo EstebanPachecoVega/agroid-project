@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-23T00:51:03.703483+00:00",
+  "generated_at": "2026-11-23T01:41:59.649648+00:00",
   "runs": [
     [
       "real-router-20261119",
@@ -285,6 +285,9 @@
     "captura_dashboard_calidad.jpeg",
     "captura_dashboard_costos.jpeg",
     "captura_dashboard_traza_router.jpeg",
-    "captura_dashboard_seguridad.jpeg"
+    "captura_dashboard_seguridad.jpeg",
+    "captura_langsmith_01_overview.png",
+    "captura_langsmith_02_tracing.png",
+    "captura_langsmith_03_monitoring.png"
   ]
 }

@@ -58,6 +58,18 @@ CAPTIONS = [
         "captura_dashboard_seguridad.jpeg",
         "Seguridad: eventos de inyección bloqueados e integridad verificada del manual.",
     ),
+    (
+        "captura_langsmith_01_overview.png",
+        "LangSmith · Overview: actividad de 7 días, trazas exitosas/fallidas, latencia P50/P99, costo y uso por modelo y herramienta.",
+    ),
+    (
+        "captura_langsmith_02_tracing.png",
+        "LangSmith · Tracing: listado de trazas reales con entrada, salida, latencia, tokens y metadatos de sesión.",
+    ),
+    (
+        "captura_langsmith_03_monitoring.png",
+        "LangSmith · Monitoring: evolución temporal de trazas, latencia y tasa de error.",
+    ),
 ]
 
 

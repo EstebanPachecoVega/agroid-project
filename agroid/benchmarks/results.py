@@ -419,6 +419,14 @@ def _write_markdown(
             "",
             "![Seguridad](captura_dashboard_seguridad.jpeg)",
             "",
+            "## Capturas de LangSmith",
+            "",
+            "![LangSmith Overview](captura_langsmith_01_overview.png)",
+            "",
+            "![LangSmith Tracing](captura_langsmith_02_tracing.png)",
+            "",
+            "![LangSmith Monitoring](captura_langsmith_03_monitoring.png)",
+            "",
             "La captura de calidad usa los filtros `Solo corridas reales` y "
             "`Excluir intentos con error`; puede incluir corridas auxiliares. "
             "La tabla de consistencia de este documento usa la corrida canónica "
@@ -475,6 +483,9 @@ def generate(evidence_dir: str | Path | None = None) -> dict[str, Any]:
             "captura_dashboard_costos.jpeg",
             "captura_dashboard_traza_router.jpeg",
             "captura_dashboard_seguridad.jpeg",
+            "captura_langsmith_01_overview.png",
+            "captura_langsmith_02_tracing.png",
+            "captura_langsmith_03_monitoring.png",
         ],
     }
     json_path.write_text(

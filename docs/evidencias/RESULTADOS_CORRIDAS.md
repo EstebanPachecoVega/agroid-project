@@ -1,6 +1,6 @@
 # Resultados consolidados — EP3 Observabilidad
 
-Generado: 2026-11-23T00:51:03.703914+00:00
+Generado: 2026-11-23T01:41:59.650146+00:00
 
 Este documento resume las corridas reales y la evidencia visual. Los datos por turno están en `resultados_turnos.csv` y `resultados_consolidados.json`.
 
@@ -74,6 +74,14 @@ El intento `real-consistency-20261123` se excluye del resumen porque sus seis tu
 ![Explorador de trazas real](captura_dashboard_traza_router.jpeg)
 
 ![Seguridad](captura_dashboard_seguridad.jpeg)
+
+## Capturas de LangSmith
+
+![LangSmith Overview](captura_langsmith_01_overview.png)
+
+![LangSmith Tracing](captura_langsmith_02_tracing.png)
+
+![LangSmith Monitoring](captura_langsmith_03_monitoring.png)
 
 La captura de calidad usa los filtros `Solo corridas reales` y `Excluir intentos con error`; puede incluir corridas auxiliares. La tabla de consistencia de este documento usa la corrida canónica `real-consistency-20261123b` (6 casos).
 

@@ -12,7 +12,7 @@ python docs/generar_anexo_evidencias.py
 - `RESULTADOS_CORRIDAS.md`: resumen de las 29 corridas reales, consistencia, sesgo, TTFT, carga e incidentes.
 - `resultados_turnos.csv`: una fila por turno evaluado.
 - `resultados_consolidados.json`: detalle estructurado para el dashboard y el informe.
-- `ANEXO_EVIDENCIAS.pdf`: anexo visual con el resumen y las seis capturas del tablero.
+- `ANEXO_EVIDENCIAS.pdf`: anexo visual con el resumen, las seis capturas del tablero y las tres vistas de LangSmith.
 
 ## Generar evidencia
 
@@ -37,13 +37,17 @@ python -m agroid.benchmarks.ttft --model nvidia/nemotron-3.5-lightning:free --re
 python -m agroid.benchmarks.export
 ```
 
-## Capturas necesarias
+## Capturas incluidas
 
-- Árbol de spans en LangSmith (al menos un turno con LLM, Tool y Retriever).
-- Dashboard: Resumen, Rendimiento, Calidad, Costos, Explorador y Seguridad.
-- Waterfall de un turno complejo.
-- Tabla de eventos de seguridad.
-- Resultado de la prueba de carga.
+- `captura_dashboard_resumen.jpeg`: KPIs generales.
+- `captura_dashboard_rendimiento.jpeg`: latencia y TTFT.
+- `captura_dashboard_calidad.jpeg`: métricas por grupo y consistencia.
+- `captura_dashboard_costos.jpeg`: costo real, equivalente y proyección.
+- `captura_dashboard_traza_router.jpeg`: waterfall de un turno real.
+- `captura_dashboard_seguridad.jpeg`: eventos de seguridad e integridad.
+- `captura_langsmith_01_overview.png`: actividad, latencia, costo y uso por modelo/herramienta.
+- `captura_langsmith_02_tracing.png`: listado de trazas reales.
+- `captura_langsmith_03_monitoring.png`: evolución temporal de trazas, latencia y error.
 
 ## Reglas de sanitización
 
@@ -61,8 +65,10 @@ summary_<run_id>.json
 load_<run_id>.json / .csv
 ttft_<timestamp>.json
 langsmith_<project>_<timestamp>.jsonl
-captura_langsmith_trace.png
-captura_dashboard_resumen.png
-captura_dashboard_calidad.png
-captura_dashboard_seguridad.png
+captura_langsmith_01_overview.png
+captura_langsmith_02_tracing.png
+captura_langsmith_03_monitoring.png
+captura_dashboard_resumen.jpeg
+captura_dashboard_calidad.jpeg
+captura_dashboard_seguridad.jpeg
 ```
