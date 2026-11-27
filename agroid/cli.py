@@ -21,6 +21,7 @@ def parse_args() -> argparse.Namespace:
     sub.add_parser("status", help="Muestra configuración y estado")
     sub.add_parser("smoke", help="Verifica dependencias, base y RAG")
     sub.add_parser("demo", help="Demo con LLM simulado (sin red)")
+    sub.add_parser("eft", help="Demo EFT con LLM simulado (sin red)")
     sub.add_parser("manifest", help="Regenera el manifiesto del manual")
 
     chat = sub.add_parser("chat", help="Chat interactivo con el agente real")
@@ -136,6 +137,52 @@ def cmd_demo() -> int:
     return 0
 
 
+def cmd_eft() -> int:
+    os.environ["LANGSMITH_TRACING"] = "false"
+    from agroid.config import reload_settings
+
+    reload_settings()
+    from agroid.agent import reset_memories, run_turn
+    from agroid.benchmarks.cases import EFT_CASES
+    from agroid.benchmarks.sim_llm import SimulatedLLM
+    from agroid.db import inicializar_bd
+    from agroid.observability import store
+
+    store.init_store()
+    inicializar_bd(reset=True)
+    reset_memories()
+    llm = SimulatedLLM()
+    for case in EFT_CASES:
+        result = run_turn(
+            case.input,
+            session_id=f"eft-{case.id}",
+            modo=case.mode,
+            category=case.category,
+            experiment_group="eft_demo",
+            model="simulado",
+            llm=llm,
+        )
+        print("\n" + "=" * 72)
+        print(f"{case.id} · {case.category} · modo solicitado={case.mode} "
+              f"efectivo={result.mode}")
+        print("Usuario:", case.input)
+        print("Agente:", result.response)
+        print(
+            f"[trace={result.trace_id} status={result.status} "
+            f"tokens={result.total_tokens} replans={result.replan_count} "
+            f"citas={result.citation_coverage}]"
+        )
+        if result.rag_sources:
+            print(
+                "Fuentes:",
+                ", ".join(
+                    f"{item.get('fragment_id')}({item.get('source_type')})"
+                    for item in result.rag_sources
+                ),
+            )
+    return 0
+
+
 def cmd_chat(session: str, mode: str) -> int:
     from agroid.agent import run_turn
     from agroid.config import get_settings
@@ -175,6 +222,8 @@ def main() -> int:
         return cmd_manifest()
     if args.command == "demo":
         return cmd_demo()
+    if args.command == "eft":
+        return cmd_eft()
     if args.command == "chat":
         return cmd_chat(args.session, args.mode)
     return 1

@@ -1,0 +1,8 @@
+prompt,version,score,chars,lines,guardrails,tests
+system,v1,0.9,1431,17,3,3
+system_v2,v2,1.0,2009,34,5,4
+planner,v1,0.75,279,3,2,1
+planner_v2,v2,0.9,972,26,4,3
+monitor,v1,0.9,642,15,2,1
+critic,v1,0.9,509,14,2,1
+rag_answer,v1,0.75,305,9,2,2

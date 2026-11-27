@@ -1,0 +1,679 @@
+{
+  "comparison": {
+    "generated_at": "2026-11-27T12:39:57.637020+00:00",
+    "baseline_system_v1": {
+      "score": 0.9,
+      "dimensions": {
+        "rol": {
+          "score": 1.0,
+          "weight": 0.15,
+          "matches": [
+            "eres",
+            "asistente"
+          ]
+        },
+        "tarea": {
+          "score": 1.0,
+          "weight": 0.15,
+          "matches": [
+            "responde",
+            "busca",
+            "devuelve"
+          ]
+        },
+        "contexto": {
+          "score": 1.0,
+          "weight": 0.15,
+          "matches": [
+            "{hoy}",
+            "{datos_sesion}",
+            "herramientas"
+          ]
+        },
+        "guardrails": {
+          "score": 1.0,
+          "weight": 0.2,
+          "matches": [
+            "nunca",
+            "no reveles",
+            "error"
+          ]
+        },
+        "formato": {
+          "score": 1.0,
+          "weight": 0.15,
+          "matches": [
+            "pasos"
+          ]
+        },
+        "seguridad": {
+          "score": 1.0,
+          "weight": 0.1,
+          "matches": [
+            "instrucciones"
+          ]
+        },
+        "pruebas": {
+          "score": 0.0,
+          "weight": 0.1,
+          "matches": []
+        }
+      },
+      "chars": 1431,
+      "lines": 17
+    },
+    "current_system_v2": {
+      "score": 1.0,
+      "dimensions": {
+        "rol": {
+          "score": 1.0,
+          "weight": 0.15,
+          "matches": [
+            "eres",
+            "asistente"
+          ]
+        },
+        "tarea": {
+          "score": 1.0,
+          "weight": 0.15,
+          "matches": [
+            "responde",
+            "busca",
+            "devuelve"
+          ]
+        },
+        "contexto": {
+          "score": 1.0,
+          "weight": 0.15,
+          "matches": [
+            "{hoy}",
+            "{datos_sesion}",
+            "{resumen_sesion}",
+            "herramientas"
+          ]
+        },
+        "guardrails": {
+          "score": 1.0,
+          "weight": 0.2,
+          "matches": [
+            "no inventes",
+            "nunca",
+            "no reveles",
+            "no ejecutes",
+            "cita",
+            "error"
+          ]
+        },
+        "formato": {
+          "score": 1.0,
+          "weight": 0.15,
+          "matches": [
+            "frases",
+            "respuesta",
+            "formato"
+          ]
+        },
+        "seguridad": {
+          "score": 1.0,
+          "weight": 0.1,
+          "matches": [
+            "seguridad",
+            "instrucciones"
+          ]
+        },
+        "pruebas": {
+          "score": 1.0,
+          "weight": 0.1,
+          "matches": [
+            "[mxx]",
+            "[exx]"
+          ]
+        }
+      },
+      "chars": 2009,
+      "lines": 34
+    },
+    "delta": 0.1,
+    "prompts": [
+      {
+        "prompt": "system",
+        "version": "v1",
+        "purpose": "Prompt histórico de la EP2/EP3, conservado para comparación.",
+        "score": 0.9,
+        "chars": 1431,
+        "lines": 17,
+        "guardrails": 3,
+        "tests": 3,
+        "dimensions": {
+          "rol": {
+            "score": 1.0,
+            "weight": 0.15,
+            "matches": [
+              "eres",
+              "asistente"
+            ]
+          },
+          "tarea": {
+            "score": 1.0,
+            "weight": 0.15,
+            "matches": [
+              "responde",
+              "busca",
+              "devuelve"
+            ]
+          },
+          "contexto": {
+            "score": 1.0,
+            "weight": 0.15,
+            "matches": [
+              "{hoy}",
+              "{datos_sesion}",
+              "herramientas"
+            ]
+          },
+          "guardrails": {
+            "score": 1.0,
+            "weight": 0.2,
+            "matches": [
+              "nunca",
+              "no reveles",
+              "error"
+            ]
+          },
+          "formato": {
+            "score": 1.0,
+            "weight": 0.15,
+            "matches": [
+              "pasos"
+            ]
+          },
+          "seguridad": {
+            "score": 1.0,
+            "weight": 0.1,
+            "matches": [
+              "instrucciones"
+            ]
+          },
+          "pruebas": {
+            "score": 0.0,
+            "weight": 0.1,
+            "matches": []
+          }
+        }
+      },
+      {
+        "prompt": "system_v2",
+        "version": "v2",
+        "purpose": "Prompt EFT con jerarquía de fuentes, política de herramientas, formato y control de contexto.",
+        "score": 1.0,
+        "chars": 2009,
+        "lines": 34,
+        "guardrails": 5,
+        "tests": 4,
+        "dimensions": {
+          "rol": {
+            "score": 1.0,
+            "weight": 0.15,
+            "matches": [
+              "eres",
+              "asistente"
+            ]
+          },
+          "tarea": {
+            "score": 1.0,
+            "weight": 0.15,
+            "matches": [
+              "responde",
+              "busca",
+              "devuelve"
+            ]
+          },
+          "contexto": {
+            "score": 1.0,
+            "weight": 0.15,
+            "matches": [
+              "{hoy}",
+              "{datos_sesion}",
+              "{resumen_sesion}",
+              "herramientas"
+            ]
+          },
+          "guardrails": {
+            "score": 1.0,
+            "weight": 0.2,
+            "matches": [
+              "no inventes",
+              "nunca",
+              "no reveles",
+              "no ejecutes",
+              "cita",
+              "error"
+            ]
+          },
+          "formato": {
+            "score": 1.0,
+            "weight": 0.15,
+            "matches": [
+              "frases",
+              "respuesta",
+              "formato"
+            ]
+          },
+          "seguridad": {
+            "score": 1.0,
+            "weight": 0.1,
+            "matches": [
+              "seguridad",
+              "instrucciones"
+            ]
+          },
+          "pruebas": {
+            "score": 1.0,
+            "weight": 0.1,
+            "matches": [
+              "[mxx]",
+              "[exx]"
+            ]
+          }
+        }
+      },
+      {
+        "prompt": "planner",
+        "version": "v1",
+        "purpose": "Planificador de una sola pasada de EP2.",
+        "score": 0.75,
+        "chars": 279,
+        "lines": 3,
+        "guardrails": 2,
+        "tests": 1,
+        "dimensions": {
+          "rol": {
+            "score": 1.0,
+            "weight": 0.15,
+            "matches": [
+              "planificador"
+            ]
+          },
+          "tarea": {
+            "score": 1.0,
+            "weight": 0.15,
+            "matches": [
+              "plan"
+            ]
+          },
+          "contexto": {
+            "score": 0.0,
+            "weight": 0.15,
+            "matches": []
+          },
+          "guardrails": {
+            "score": 1.0,
+            "weight": 0.2,
+            "matches": [
+              "no ejecutes"
+            ]
+          },
+          "formato": {
+            "score": 1.0,
+            "weight": 0.15,
+            "matches": [
+              "pasos"
+            ]
+          },
+          "seguridad": {
+            "score": 1.0,
+            "weight": 0.1,
+            "matches": [
+              "instrucciones"
+            ]
+          },
+          "pruebas": {
+            "score": 0.0,
+            "weight": 0.1,
+            "matches": []
+          }
+        }
+      },
+      {
+        "prompt": "planner_v2",
+        "version": "v2",
+        "purpose": "Planificador con JSON, criterios de éxito, fallback y confirmación.",
+        "score": 0.9,
+        "chars": 972,
+        "lines": 26,
+        "guardrails": 4,
+        "tests": 3,
+        "dimensions": {
+          "rol": {
+            "score": 1.0,
+            "weight": 0.15,
+            "matches": [
+              "eres",
+              "planificador"
+            ]
+          },
+          "tarea": {
+            "score": 1.0,
+            "weight": 0.15,
+            "matches": [
+              "responde",
+              "plan",
+              "devuelve"
+            ]
+          },
+          "contexto": {
+            "score": 1.0,
+            "weight": 0.15,
+            "matches": [
+              "herramientas"
+            ]
+          },
+          "guardrails": {
+            "score": 1.0,
+            "weight": 0.2,
+            "matches": [
+              "no inventes",
+              "no ejecutes"
+            ]
+          },
+          "formato": {
+            "score": 1.0,
+            "weight": 0.15,
+            "matches": [
+              "json",
+              "pasos"
+            ]
+          },
+          "seguridad": {
+            "score": 0.0,
+            "weight": 0.1,
+            "matches": []
+          },
+          "pruebas": {
+            "score": 1.0,
+            "weight": 0.1,
+            "matches": [
+              "criterio",
+              "verificable"
+            ]
+          }
+        }
+      },
+      {
+        "prompt": "monitor",
+        "version": "v1",
+        "purpose": "Monitor de ejecución para decidir continuar, replanificar o cerrar.",
+        "score": 0.9,
+        "chars": 642,
+        "lines": 15,
+        "guardrails": 2,
+        "tests": 1,
+        "dimensions": {
+          "rol": {
+            "score": 1.0,
+            "weight": 0.15,
+            "matches": [
+              "eres",
+              "monitor"
+            ]
+          },
+          "tarea": {
+            "score": 1.0,
+            "weight": 0.15,
+            "matches": [
+              "plan",
+              "decide",
+              "devuelve"
+            ]
+          },
+          "contexto": {
+            "score": 1.0,
+            "weight": 0.15,
+            "matches": [
+              "herramientas"
+            ]
+          },
+          "guardrails": {
+            "score": 1.0,
+            "weight": 0.2,
+            "matches": [
+              "no inventes"
+            ]
+          },
+          "formato": {
+            "score": 1.0,
+            "weight": 0.15,
+            "matches": [
+              "json",
+              "pasos"
+            ]
+          },
+          "seguridad": {
+            "score": 0.0,
+            "weight": 0.1,
+            "matches": []
+          },
+          "pruebas": {
+            "score": 1.0,
+            "weight": 0.1,
+            "matches": [
+              "criterio"
+            ]
+          }
+        }
+      },
+      {
+        "prompt": "critic",
+        "version": "v1",
+        "purpose": "Crítico de groundedness y citas antes de entregar la respuesta.",
+        "score": 0.9,
+        "chars": 509,
+        "lines": 14,
+        "guardrails": 2,
+        "tests": 1,
+        "dimensions": {
+          "rol": {
+            "score": 1.0,
+            "weight": 0.15,
+            "matches": [
+              "eres"
+            ]
+          },
+          "tarea": {
+            "score": 1.0,
+            "weight": 0.15,
+            "matches": [
+              "revisa",
+              "devuelve"
+            ]
+          },
+          "contexto": {
+            "score": 1.0,
+            "weight": 0.15,
+            "matches": [
+              "herramientas"
+            ]
+          },
+          "guardrails": {
+            "score": 1.0,
+            "weight": 0.2,
+            "matches": [
+              "cita"
+            ]
+          },
+          "formato": {
+            "score": 1.0,
+            "weight": 0.15,
+            "matches": [
+              "json",
+              "respuesta"
+            ]
+          },
+          "seguridad": {
+            "score": 0.0,
+            "weight": 0.1,
+            "matches": []
+          },
+          "pruebas": {
+            "score": 1.0,
+            "weight": 0.1,
+            "matches": [
+              "[mxx]",
+              "[exx]"
+            ]
+          }
+        }
+      },
+      {
+        "prompt": "rag_answer",
+        "version": "v1",
+        "purpose": "Síntesis extractiva con citas para preguntas técnicas.",
+        "score": 0.75,
+        "chars": 305,
+        "lines": 9,
+        "guardrails": 2,
+        "tests": 2,
+        "dimensions": {
+          "rol": {
+            "score": 0.0,
+            "weight": 0.15,
+            "matches": []
+          },
+          "tarea": {
+            "score": 1.0,
+            "weight": 0.15,
+            "matches": [
+              "responde"
+            ]
+          },
+          "contexto": {
+            "score": 1.0,
+            "weight": 0.15,
+            "matches": [
+              "{consulta}"
+            ]
+          },
+          "guardrails": {
+            "score": 1.0,
+            "weight": 0.2,
+            "matches": [
+              "no inventes",
+              "cita"
+            ]
+          },
+          "formato": {
+            "score": 1.0,
+            "weight": 0.15,
+            "matches": [
+              "respuesta"
+            ]
+          },
+          "seguridad": {
+            "score": 0.0,
+            "weight": 0.1,
+            "matches": []
+          },
+          "pruebas": {
+            "score": 1.0,
+            "weight": 0.1,
+            "matches": [
+              "[mxx]",
+              "[exx]"
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "functional_regression": {
+    "model": "simulado",
+    "cases": 8,
+    "mean_tool_match": 1.0,
+    "mean_args_match": 1.0,
+    "mean_facts_match": 1.0,
+    "mean_groundedness": 0.9643,
+    "mean_score": 0.9964,
+    "rows": [
+      {
+        "case_id": "E01",
+        "status": "success",
+        "tool_match": 1.0,
+        "args_match": 1.0,
+        "facts_match": 1.0,
+        "groundedness": 1.0,
+        "score": 1.0,
+        "prompt_version": "v2"
+      },
+      {
+        "case_id": "E02",
+        "status": "success",
+        "tool_match": 1.0,
+        "args_match": 1.0,
+        "facts_match": 1.0,
+        "groundedness": 1.0,
+        "score": 1.0,
+        "prompt_version": "v2"
+      },
+      {
+        "case_id": "E03",
+        "status": "success",
+        "tool_match": 1.0,
+        "args_match": 1.0,
+        "facts_match": 1.0,
+        "groundedness": 1.0,
+        "score": 1.0,
+        "prompt_version": "v2"
+      },
+      {
+        "case_id": "E04",
+        "status": "success",
+        "tool_match": 1.0,
+        "args_match": 1.0,
+        "facts_match": 1.0,
+        "groundedness": 1.0,
+        "score": 1.0,
+        "prompt_version": "v2"
+      },
+      {
+        "case_id": "E05",
+        "status": "success",
+        "tool_match": 1.0,
+        "args_match": 1.0,
+        "facts_match": 1.0,
+        "groundedness": 0.7143,
+        "score": 0.9714,
+        "prompt_version": "v2"
+      },
+      {
+        "case_id": "E06",
+        "status": "blocked",
+        "tool_match": 1.0,
+        "args_match": 1.0,
+        "facts_match": 1.0,
+        "groundedness": 1.0,
+        "score": 1.0,
+        "prompt_version": "v2"
+      },
+      {
+        "case_id": "E07",
+        "status": "success",
+        "tool_match": 1.0,
+        "args_match": 1.0,
+        "facts_match": 1.0,
+        "groundedness": 1.0,
+        "score": 1.0,
+        "prompt_version": "v2"
+      },
+      {
+        "case_id": "E08",
+        "status": "success",
+        "tool_match": 1.0,
+        "args_match": 1.0,
+        "facts_match": 1.0,
+        "groundedness": 1.0,
+        "score": 1.0,
+        "prompt_version": "v2"
+      }
+    ]
+  }
+}

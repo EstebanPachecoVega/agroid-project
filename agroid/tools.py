@@ -583,9 +583,10 @@ def priorizar_pedidos() -> str:
 # ----------------------------------------------------------------------
 @tool
 def buscar_manual(consulta: str) -> str:
-    """Busca en el manual de manejo de huevos (almacenamiento, equivalencias
-    entre especies, tasas de postura, planificación, higiene, incubación).
-    Úsala para recomendaciones o datos técnicos, no para cifras del inventario."""
+    """Busca en el conocimiento técnico de huevos: manual interno y corpus
+    externo citado (FAO, USDA, Codex, extensión, INIA). Devuelve fragmentos
+    con su identificador [Mxx]/[Exx], procedencia y puntaje. Úsala para
+    recomendaciones o datos técnicos, no para cifras del inventario."""
     args = {"consulta": consulta}
     out = ""
     start = perf_counter()
@@ -597,23 +598,53 @@ def buscar_manual(consulta: str) -> str:
             out = invalid
         else:
             rag = get_rag()
-            hits = rag.buscar_detallado(str(consulta), k=2)
+            hits = rag.buscar_detallado(str(consulta), k=3, balance=True)
+            state = get_turn_state()
+            if state is not None and hits:
+                known = {
+                    item.get("fragment_id")
+                    for item in getattr(state, "rag_sources", [])
+                }
+                for hit in hits:
+                    if hit.fragment_id not in known:
+                        state.rag_sources.append(hit.as_dict())
+                        known.add(hit.fragment_id)
             if not hits:
-                out = "El manual no contiene información sobre esa consulta."
+                out = "El conocimiento disponible no contiene información sobre esa consulta."
             else:
+                warnings = []
+                for label, report in rag.integrity.items():
+                    if not report.ok:
+                        warnings.append(
+                            f"{label}: {report.reason}"
+                        )
                 warning = ""
-                if not rag.integrity.ok:
+                if warnings:
                     warning = (
-                        "Aviso: el manual no superó la verificación de "
-                        f"integridad ({rag.integrity.reason}); se excluyeron "
-                        "los fragmentos alterados.\n"
+                        "Aviso: una fuente no superó la verificación de "
+                        "integridad (" + "; ".join(warnings) + "); se "
+                        "excluyeron los fragmentos alterados.\n"
                     )
-                out = warning + "\n".join(
-                    f"[{hit.score:.2f}] ({hit.fragment_id}) {hit.texto}"
-                    for hit in hits
-                )
+                lines = []
+                for hit in hits:
+                    meta = " · ".join(
+                        part
+                        for part in (
+                            hit.author,
+                            str(hit.year) if hit.year else "",
+                            hit.title,
+                        )
+                        if part
+                    )
+                    lines.append(
+                        f"[{hit.source_type.upper()}] [{hit.fragment_id}] "
+                        f"({hit.score:.2f}) {hit.tema}"
+                        + (f" — {meta}" if meta else "")
+                        + f"\n{hit.texto}"
+                    )
+                out = warning + "\n\n".join(lines)
     except Exception as exc:
-        out = f"Error al consultar el manual: {exc}"
+        out = f"Error al consultar el conocimiento: {exc}"
     finally:
         duration = round((perf_counter() - start) * 1000, 2)
         if rag is not None:
@@ -629,7 +660,10 @@ def buscar_manual(consulta: str) -> str:
                 status="success" if not _status(out) == "error" else "error",
                 attributes={
                     "mode": rag.modo,
-                    "integrity_ok": rag.integrity.ok,
+                    "integrity_ok": all(
+                        report.ok for report in rag.integrity.values()
+                    ),
+                    "source_mix": rag.source_mix(),
                     "query_chars": len(str(consulta)),
                 },
                 langsmith_run_id=info.get("langsmith_run_id"),

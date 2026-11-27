@@ -61,13 +61,26 @@ class Settings:
         self.evidence_dir = Path(
             os.getenv("AGROID_EVIDENCE_DIR", str(ROOT / "docs" / "evidencias"))
         ).expanduser().resolve()
-        for directory in (self.data_dir, self.logs_dir, self.evidence_dir):
+        self.eft_evidence_dir = Path(
+            os.getenv(
+                "AGROID_EFT_EVIDENCE_DIR",
+                str(ROOT / "docs" / "evidencias_eft"),
+            )
+        ).expanduser().resolve()
+        for directory in (
+            self.data_dir,
+            self.logs_dir,
+            self.evidence_dir,
+            self.eft_evidence_dir,
+        ):
             directory.mkdir(parents=True, exist_ok=True)
 
         self.db_path = self.data_dir / "agroid_huevos.db"
         self.obs_db_path = self.data_dir / "observability.db"
         self.manual_path = self.data_dir / "manual.json"
         self.manifest_path = self.data_dir / "manual_manifest.json"
+        self.external_corpus_path = self.data_dir / "external_corpus.json"
+        self.external_manifest_path = self.data_dir / "external_manifest.json"
 
         # Proveedor LLM (OpenRouter por defecto).
         self.llm_api_key = (
@@ -82,6 +95,7 @@ class Settings:
         self.llm_model_pinned = os.getenv(
             "LLM_MODEL_PINNED", "nvidia/nemotron-3.5-lightning:free"
         ).strip()
+        self.llm_model_strong = os.getenv("LLM_MODEL_STRONG", "").strip()
         self.llm_embed_model = os.getenv(
             "LLM_EMBED_MODEL", "openai/text-embedding-3-small"
         ).strip()
@@ -90,7 +104,7 @@ class Settings:
         # LangSmith.
         self.langsmith_api_key = os.getenv("LANGSMITH_API_KEY", "").strip()
         self.langsmith_project = os.getenv(
-            "LANGSMITH_PROJECT", "agroid-huevos-ep3"
+            "LANGSMITH_PROJECT", "agroid-huevos-eft"
         ).strip()
         self.langsmith_endpoint = os.getenv(
             "LANGSMITH_ENDPOINT", "https://api.smith.langchain.com"
@@ -244,12 +258,16 @@ class Settings:
             "llm_base_url": self.llm_base_url,
             "llm_model": self.llm_model,
             "llm_model_pinned": self.llm_model_pinned,
+            "llm_model_strong_configured": bool(self.llm_model_strong),
             "llm_key_configured": bool(self.llm_api_key),
             "langsmith_enabled": self.langsmith_enabled,
             "langsmith_project": self.langsmith_project,
             "db_path": str(self.db_path),
             "obs_db_path": str(self.obs_db_path),
+            "manual_path": str(self.manual_path),
+            "external_corpus_path": str(self.external_corpus_path),
             "logs_dir": str(self.logs_dir),
+            "eft_evidence_dir": str(self.eft_evidence_dir),
         }
 
 

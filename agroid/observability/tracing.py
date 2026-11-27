@@ -212,6 +212,8 @@ class TurnState:
     session_id: str
     turn_id: str
     mode: str = "react"
+    requested_mode: str = ""
+    prompt_version: str = "v2"
     category: str = ""
     experiment_group: str = ""
     consistency_group: str = ""
@@ -238,6 +240,12 @@ class TurnState:
     langsmith_parent_run_id: str | None = None
     repeated_actions: list[str] = field(default_factory=list)
     loop_detected: bool = False
+    plan_json: dict[str, Any] = field(default_factory=dict)
+    replan_count: int = 0
+    rag_sources: list[dict[str, Any]] = field(default_factory=list)
+    citation_coverage: float | None = None
+    context_budget: dict[str, Any] = field(default_factory=dict)
+    critic: dict[str, Any] = field(default_factory=dict)
     _action_keys: set[str] = field(default_factory=set)
 
     def __post_init__(self) -> None:
@@ -304,6 +312,8 @@ class TurnState:
             "ended_at": utc_now() if self.status != "running" else None,
             "duration_ms": self.duration_ms(),
             "mode": self.mode,
+            "requested_mode": self.requested_mode or self.mode,
+            "prompt_version": self.prompt_version,
             "category": self.category,
             "experiment_group": self.experiment_group,
             "consistency_group": self.consistency_group,
@@ -333,6 +343,12 @@ class TurnState:
             "langsmith_run_id": self.langsmith_run_id,
             "security_json": _json(self.security),
             "anomalies_json": _json(self.anomalies),
+            "plan_json": _json(self.plan_json),
+            "replan_count": self.replan_count,
+            "rag_sources_json": _json(self.rag_sources),
+            "citation_coverage": self.citation_coverage,
+            "context_budget_json": _json(self.context_budget),
+            "critic_json": _json(self.critic),
         }
 
 
@@ -345,12 +361,16 @@ def start_turn(
     run_id: str = "",
     input_redacted: str = "",
     model_requested: str = "",
+    requested_mode: str = "",
+    prompt_version: str = "v2",
 ) -> TurnState:
     state = TurnState(
         trace_id=new_trace_id(),
         session_id=session_id,
         turn_id=uuid.uuid4().hex[:12],
         mode=mode,
+        requested_mode=requested_mode or mode,
+        prompt_version=prompt_version,
         category=category,
         experiment_group=experiment_group,
         consistency_group=consistency_group,

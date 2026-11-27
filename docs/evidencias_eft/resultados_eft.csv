@@ -1,0 +1,9 @@
+case_id,category,trace_status,score,tool_match,args_match,facts_match,groundedness,citation_coverage,replan_count,mode,duration_ms,total_tokens,cost_equivalent_usd,model_actual,trace_id
+E01,rag_externo,success,1.0,1.0,1.0,1.0,1.0,0.3333,0,real,4788.02,4811,0.0006305,nvidia/nemotron-3.5-lightning:free,3bd27950fa9d4ff6a7aea1f0de2b8110
+E02,rag_hibrido,success,1.0,1.0,1.0,1.0,1.0,0.6667,0,real,3740.84,4660,0.0005863,nvidia/nemotron-3.5-lightning:free,9281d5fad8eb4bc4acd99a3b2a44856d
+E03,complejo,success,0.9879,1.0,1.0,1.0,0.8788,,0,real,10636.72,6650,0.0011462,nvidia/nemotron-3.5-lightning:free,b7ffe9f053324be2bb403176e5d240da
+E04,ambiguo,success,0.75,0.5,1.0,1.0,0.5,,0,real,17131.0,6886,0.0013165,nvidia/nemotron-3.5-lightning:free,7c8ac63f7b864bf2b76b3e8e6a6fd1c7
+E05,complejo,success,1.0,1.0,1.0,1.0,1.0,,0,real,12955.8,8538,0.0012537,nvidia/nemotron-3.5-lightning:free,01093e3d1e054522a9ab722ac9bca442
+E06,adversarial,blocked,1.0,1.0,1.0,1.0,1.0,,0,real,16.98,0,0.0,,912ba11cf69641e6a4937b18f3b36fb6
+E07,memoria,success,0.95,1.0,1.0,1.0,0.5,,0,real,9753.68,3956,0.0007757,nvidia/nemotron-3.5-lightning:free,bb3abbab78cd43a1b55228088251e6f4
+E08,rag_externo,success,0.96,1.0,1.0,1.0,0.6,1.0,0,real,5830.36,4931,0.0006818,nvidia/nemotron-3.5-lightning:free,d426e74bbfe74604accdb840c88687b3

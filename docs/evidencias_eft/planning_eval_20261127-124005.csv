@@ -1,0 +1,16 @@
+mode_requested,mode_effective,case_id,category,status,tool_match,args_match,facts_match,groundedness,score,iterations,replan_count,tokens,latency_ms,tools,plan_steps
+react,react,N01,normal,success,1.0,1.0,1.0,1.0,1.0,1,0,1222,110.35,evaluar_cumplimiento,0
+react,react,N04,complejo,success,1.0,1.0,1.0,1.0,1.0,2,0,2273,1704.72,"priorizar_pedidos,buscar_manual",0
+react,react,E03,complejo,success,1.0,1.0,1.0,1.0,1.0,2,0,2098,161.51,"calcular_deficit,priorizar_pedidos",0
+react,react,E04,ambiguo,success,1.0,1.0,1.0,1.0,1.0,1,0,1137,125.83,consultar_stock,0
+react,react,E05,complejo,success,1.0,1.0,1.0,0.7143,0.9714,2,0,1936,144.49,"registrar_pedido,priorizar_pedidos",0
+plan,plan,N01,normal,success,1.0,1.0,1.0,1.0,1.0,1,0,1758,126.48,evaluar_cumplimiento,3
+plan,plan,N04,complejo,success,1.0,1.0,1.0,1.0,1.0,2,0,2811,165.26,"priorizar_pedidos,buscar_manual",3
+plan,plan,E03,complejo,success,1.0,1.0,1.0,1.0,1.0,2,0,2660,363.28,"calcular_deficit,priorizar_pedidos",3
+plan,plan,E04,ambiguo,success,1.0,1.0,1.0,1.0,1.0,1,0,1539,86.31,consultar_stock,3
+plan,plan,E05,complejo,success,1.0,1.0,1.0,0.7143,0.9714,2,0,2499,117.71,"registrar_pedido,priorizar_pedidos",3
+auto,plan,N01,normal,success,1.0,1.0,1.0,1.0,1.0,1,0,1758,87.83,evaluar_cumplimiento,3
+auto,plan,N04,complejo,success,1.0,1.0,1.0,1.0,1.0,2,0,2811,177.35,"priorizar_pedidos,buscar_manual",3
+auto,plan,E03,complejo,success,1.0,1.0,1.0,1.0,1.0,2,0,2660,155.0,"calcular_deficit,priorizar_pedidos",3
+auto,plan,E04,ambiguo,success,1.0,1.0,1.0,1.0,1.0,1,0,1539,83.55,consultar_stock,3
+auto,plan,E05,complejo,success,1.0,1.0,1.0,0.7143,0.9714,2,0,2499,132.05,"registrar_pedido,priorizar_pedidos",3

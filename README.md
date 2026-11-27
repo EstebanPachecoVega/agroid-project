@@ -1,14 +1,114 @@
-# AgroID Huevos — Agente de inventario con observabilidad
+# AgroID Huevos — Agente de inventario con RAG híbrido, planificación adaptativa y observabilidad
 
-Proyecto de las Evaluaciones Parciales 2 y 3 de ISY0101. El agente conversacional en español consulta y actualiza inventario de huevos, revisa pedidos, calcula déficits, prioriza entregas y recupera información de un manual. La EP3 añade observabilidad con LangSmith, logs JSON, dashboard Streamlit, evaluación automatizada y controles de seguridad.
+Proyecto de la **Evaluación Final Transversal (EFT) de ISY0101**. El agente conversacional en español consulta y actualiza inventario de huevos, revisa pedidos, calcula déficit, prioriza entregas y recupera información de un manual interno **y de un corpus técnico externo citado**. La EFT agrega prompts versionados, RAG híbrido, memoria con resumen, planificación adaptativa, observabilidad, seguridad y un notebook autocontenido.
 
 **Integrantes:** Esteban Pacheco Vega y Javier Perez Mora  
 **Sección:** 007D  
-**Paquete EP3:** [`agroid/`](agroid/)  
-**Dashboard:** `streamlit run agroid/dashboard/app.py`  
-**Notebook EP2 (base histórica):** [`AgroID_Huevos_Agente_EP2.ipynb`](AgroID_Huevos_Agente_EP2.ipynb)
+**Caso:** AgroID Huevos, PYME avícola verosímil con datos simulados  
+**Notebook EFT:** [`AgroID_Huevos_EFT.ipynb`](AgroID_Huevos_EFT.ipynb)  
+**Informe EFT:** [`docs/INFORME_EFT.md`](docs/INFORME_EFT.md) · [`docs/INFORME_EFT.pdf`](docs/INFORME_EFT.pdf)  
+**Defensa:** [`docs/defensa_eft/`](docs/defensa_eft/)  
+**Evidencia EFT:** [`docs/evidencias_eft/`](docs/evidencias_eft/)  
+**Checklist de entrega:** [`docs/CHECKLIST_ENTREGA_EFT.md`](docs/CHECKLIST_ENTREGA_EFT.md)
 
-> Datos de inventario simulados. No usar para gestionar una operación avícola real sin validar datos, reglas y contenido técnico.
+> Datos de inventario simulados. El caso es verosímil y no corresponde a un cliente real. No usar para gestionar una operación avícola real sin validar datos, reglas, fuentes y contenido técnico.
+
+## EFT · Qué incluye
+
+- **Caso organizacional:** contexto, procesos, stakeholders, requerimientos, desafíos y KPIs.
+- **Prompts versionados:** catálogo `system_v2`, `planner_v2`, `monitor`, `critic`, `rag_answer`, con rúbrica y regresión funcional.
+- **RAG interno + externo:** 10 fragmentos internos + 14 externos citados (FAO, USDA, Codex, UGA, American Egg Board, INIA), con SHA-256/HMAC y citas `[Mxx]`/`[Exx]`.
+- **Agente funcional:** 10 herramientas de consulta, escritura, razonamiento y recuperación.
+- **Memoria:** ventana corta, resumen rodante y hechos persistentes por `session_id`.
+- **Planificación adaptativa:** clasificador, plan con criterios de éxito, monitor, replanificación acotada y política de escritura.
+- **Observabilidad:** LangSmith, JSONL, SQLite, dashboard Streamlit de 7 pestañas, métricas de calidad, latencia, consistencia, costo, RAG, prompts y planificación.
+- **Seguridad:** PII, inyección, moderación, rate limiting, integridad del corpus y bloqueo de fuga del prompt.
+- **Notebook autocontenido:** ejecuta el paquete y los datos en Colab/Jupyter, con modo simulado sin API keys.
+
+## EFT · Resultados principales
+
+| Corrida | Turnos | Éxito | Score | Tool match | Groundedness | Citas | Tokens | Costo real |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| EFT real (`nemotron-3.5-lightning:free`) | 8 | 7 + 1 bloqueado | 0,956 | 0,938 | 0,810 | 0,667 | 40.432 | USD 0 |
+| EP3 real (29 turnos) | 29 | 29/29 | 0,970 | 0,943 | 0,926 | — | 139.773 | USD 0 |
+| RAG híbrido (10 consultas) | — | — | recall@3 0,867 | — | — | 9/10 con fuente externa | — | — |
+| Prompt v2 vs v1 | — | — | rúbrica 1,00 vs 0,90 | — | — | — | — | — |
+
+La corrida real EFT usó `nvidia/nemotron-3.5-lightning:free`. El costo real fue USD 0; el costo equivalente (modelo pagado de referencia) fue USD 0,0064. La comparación con un modelo de gama alta quedó preparada en la suite `validation` (`LLM_MODEL_STRONG`), pero no se ejecutó para no incurrir en costo.
+
+## EFT · Inicio rápido
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+Copy-Item .env.example .env
+# Completa LLM_API_KEY y, si quieres LangSmith, LANGSMITH_API_KEY.
+```
+
+Sin API keys, el notebook y las suites simuladas funcionan igual:
+
+```powershell
+python tests/run_all.py
+python -m agroid.benchmarks.run --mode sim --suite eft
+python -m agroid.benchmarks.rag_eval
+python -m agroid.benchmarks.prompt_eval
+python -m agroid.benchmarks.planning_eval
+python -m agroid.cli eft
+streamlit run agroid/dashboard/app.py
+```
+
+Con API key y cuota free:
+
+```powershell
+python -m agroid.benchmarks.run --mode real --suite eft --limit 8 --model nvidia/nemotron-3.5-lightning:free
+```
+
+Validación opcional con un modelo de mayor capacidad (si hay crédito):
+
+```powershell
+$env:LLM_MODEL_STRONG="openai/gpt-4.1-mini"   # o el modelo disponible
+python -m agroid.benchmarks.run --mode real --suite validation --limit 7
+```
+
+## EFT · Estructura
+
+```text
+agroid/
+  prompts.py            catálogo versionado de prompts
+  planning.py           clasificador, plan, monitor y crítico
+  memory.py             ventana, resumen y hechos por sesión
+  context_budget.py     presupuesto de tokens
+  rag.py                RAG híbrido interno/externo
+  tools.py              10 herramientas
+  agent.py              orquestación y seguridad del turno
+  observability/        LangSmith, JSONL, SQLite, métricas
+  security/             PII, inyección, integridad, rate limit
+  benchmarks/           suites, RAG eval, prompt eval, planning eval
+  dashboard/app.py      Streamlit
+data/
+  manual.json, manual_manifest.json
+  external_corpus.json, external_manifest.json
+docs/
+  INFORME_EFT.md, INFORME_EFT.pdf
+  MATRIZ_CUMPLIMIENTO_EFT.md
+  ANALISIS_RIESGOS_EFT.md
+  ARQUITECTURA_EFT.md
+  defensa_eft/
+  evidencias_eft/
+tests/
+  test_security.py, test_observability.py, test_tools.py, test_evaluator.py,
+  test_agent_sim.py, test_prompts.py, test_rag_hybrid.py, test_planning.py,
+  test_memory_long_flow.py, test_context_budget.py
+```
+
+## EFT · Declaración de uso de IA
+
+El equipo usó OpenCode (asistente de IA; modelo DeepSeek V4.1 Flash) como apoyo en implementación, revisión, diagramas, búsqueda de referencias y edición. Las decisiones de alcance, arquitectura, criterios de evaluación, validación de resultados y las reflexiones individuales son de los integrantes. La declaración completa está en el informe (Anexo D). Las reflexiones individuales se mantuvieron con la voz y el contenido de cada autor; la IA solo apoyó la edición formal.
+
+---
+
+# Agente EP3 (base histórica)
 
 ## EP3 · Observabilidad
 
@@ -371,8 +471,8 @@ Otros límites visibles en la implementación:
 
 - [`docs/INFORME_TECNICO.md`](docs/INFORME_TECNICO.md): fuente editable del informe técnico, con el catálogo de contratos, cálculos, arquitectura, secuencia, decisiones y referencias. Las secciones de autoría exclusiva del equipo están marcadas como pendientes.
 - [`docs/INFORME_TECNICO.pdf`](docs/INFORME_TECNICO.pdf): versión PDF del informe, de cinco páginas (una de ellas horizontal para el diagrama de secuencia), que es el máximo de la pauta.
-- [`docs/MATRIZ_CUMPLIMIENTO.md`](docs/MATRIZ_CUMPLIMIENTO.md): correspondencia entre indicadores, evidencia existente y trabajo pendiente.
-- [`docs/GUIA_SECCIONES_7_Y_8.md`](docs/GUIA_SECCIONES_7_Y_8.md): apoyo para redactar la argumentación y las reflexiones, checklist previo a la entrega y guion de demostración. No forma parte de la entrega.
+- [`docs/MATRIZ_CUMPLIMIENTO_EP3.md`](docs/MATRIZ_CUMPLIMIENTO_EP3.md): correspondencia entre indicadores, evidencia existente y trabajo pendiente.
+- [`docs/PLAN_CORRIDAS_REALES.md`](docs/PLAN_CORRIDAS_REALES.md): calendario y control de cuota de las corridas reales.
 - [`docs/diagrama_arquitectura.png`](docs/diagrama_arquitectura.png), [`docs/diagrama_secuencia.png`](docs/diagrama_secuencia.png) y [`docs/diagrama_secuencia.mmd`](docs/diagrama_secuencia.mmd): diagramas de componentes y de secuencia (este último también en Mermaid).
 - [`docs/generar_diagramas.py`](docs/generar_diagramas.py): fuente editable de ambos diagramas.
 - [`docs/generar_informe_pdf.py`](docs/generar_informe_pdf.py): convierte `INFORME_TECNICO.md` en PDF y avisa si supera cinco páginas.

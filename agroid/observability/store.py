@@ -74,6 +74,8 @@ SCHEMA = [
         ended_at TEXT,
         duration_ms REAL,
         mode TEXT,
+        requested_mode TEXT,
+        prompt_version TEXT,
         category TEXT,
         experiment_group TEXT,
         consistency_group TEXT,
@@ -93,7 +95,13 @@ SCHEMA = [
         langsmith_trace_id TEXT,
         langsmith_run_id TEXT,
         security_json TEXT,
-        anomalies_json TEXT
+        anomalies_json TEXT,
+        plan_json TEXT,
+        replan_count INTEGER DEFAULT 0,
+        rag_sources_json TEXT,
+        citation_coverage REAL,
+        context_budget_json TEXT,
+        critic_json TEXT
     )""",
     """CREATE TABLE IF NOT EXISTS spans (
         span_id TEXT PRIMARY KEY,
@@ -167,6 +175,10 @@ SCHEMA = [
         groundedness REAL,
         consistency_group TEXT,
         score REAL,
+        citation_coverage REAL,
+        mode TEXT,
+        replan_count INTEGER DEFAULT 0,
+        rag_sources_json TEXT,
         notes TEXT,
         created_at TEXT
     )""",
@@ -229,10 +241,47 @@ def init_store(path: str | os.PathLike[str] | None = None) -> Path:
         con.execute("PRAGMA journal_mode=WAL")
         for statement in SCHEMA:
             con.execute(statement)
+        _migrate_trace_columns(con)
         con.commit()
     finally:
         con.close()
     return target
+
+
+def _migrate_trace_columns(con: sqlite3.Connection) -> None:
+    """Agrega columnas EFT a bases de observabilidad ya creadas."""
+    existing = {
+        row[1] for row in con.execute("PRAGMA table_info(traces)").fetchall()
+    }
+    additions = {
+        "requested_mode": "TEXT",
+        "prompt_version": "TEXT",
+        "plan_json": "TEXT",
+        "replan_count": "INTEGER DEFAULT 0",
+        "rag_sources_json": "TEXT",
+        "citation_coverage": "REAL",
+        "context_budget_json": "TEXT",
+        "critic_json": "TEXT",
+    }
+    for column, definition in additions.items():
+        if column not in existing:
+            con.execute(f"ALTER TABLE traces ADD COLUMN {column} {definition}")
+
+    existing_eval = {
+        row[1]
+        for row in con.execute("PRAGMA table_info(evaluations)").fetchall()
+    }
+    eval_additions = {
+        "citation_coverage": "REAL",
+        "mode": "TEXT",
+        "replan_count": "INTEGER DEFAULT 0",
+        "rag_sources_json": "TEXT",
+    }
+    for column, definition in eval_additions.items():
+        if column not in existing_eval:
+            con.execute(
+                f"ALTER TABLE evaluations ADD COLUMN {column} {definition}"
+            )
 
 
 def reset_store(path: str | os.PathLike[str] | None = None) -> Path:
@@ -303,6 +352,8 @@ _TRACE_COLUMNS = {
     "ended_at",
     "duration_ms",
     "mode",
+    "requested_mode",
+    "prompt_version",
     "category",
     "experiment_group",
     "consistency_group",
@@ -323,6 +374,12 @@ _TRACE_COLUMNS = {
     "langsmith_run_id",
     "security_json",
     "anomalies_json",
+    "plan_json",
+    "replan_count",
+    "rag_sources_json",
+    "citation_coverage",
+    "context_budget_json",
+    "critic_json",
 }
 
 
@@ -387,6 +444,14 @@ def insert_evaluation(evaluation: dict[str, Any]) -> int:
         "groundedness": float(evaluation.get("groundedness", 0.0) or 0.0),
         "consistency_group": evaluation.get("consistency_group", ""),
         "score": float(evaluation.get("score", 0.0) or 0.0),
+        "citation_coverage": (
+            float(evaluation["citation_coverage"])
+            if evaluation.get("citation_coverage") is not None
+            else None
+        ),
+        "mode": evaluation.get("mode", ""),
+        "replan_count": int(evaluation.get("replan_count", 0) or 0),
+        "rag_sources_json": _json(evaluation.get("rag_sources", [])),
         "notes": evaluation.get("notes", ""),
         "created_at": evaluation.get("created_at") or utc_now(),
     }
@@ -396,8 +461,9 @@ def insert_evaluation(evaluation: dict[str, Any]) -> int:
             "INSERT INTO evaluations "
             "(run_id, case_id, category, experiment_group, repetition, "
             "trace_id, tool_match, args_match, facts_match, groundedness, "
-            "consistency_group, score, notes, created_at) "
-            "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+            "consistency_group, score, citation_coverage, mode, replan_count, "
+            "rag_sources_json, notes, created_at) "
+            "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
             tuple(values.values()),
         )
         con.commit()

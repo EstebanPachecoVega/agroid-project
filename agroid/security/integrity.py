@@ -41,13 +41,17 @@ def load_manual(path: str | Path) -> list[dict[str, Any]]:
                 {"id": f"M{index:02d}", "tema": "", "texto": item}
             )
         else:
-            result.append(
+            # Se conservan los metadatos de fuente (tipo, título, URL, año)
+            # para que el RAG pueda citar el origen sin romper el manifiesto.
+            fragment = dict(item)
+            fragment.update(
                 {
                     "id": str(item.get("id") or f"M{index:02d}"),
                     "tema": str(item.get("tema") or ""),
                     "texto": str(item.get("texto") or item.get("text") or ""),
                 }
             )
+            result.append(fragment)
     return result
 
 

@@ -35,6 +35,8 @@ def parse_args() -> argparse.Namespace:
             "consistency",
             "bias",
             "post_fix",
+            "eft",
+            "validation",
             "experiment",
         ],
     )
@@ -51,6 +53,8 @@ def parse_args() -> argparse.Namespace:
 
 
 def _default_model(suite: str, settings: Any) -> str:
+    if suite == "validation" and settings.llm_model_strong:
+        return settings.llm_model_strong
     if suite in {"pinned", "consistency", "bias", "post_fix"}:
         return settings.llm_model_pinned
     return settings.llm_model
@@ -212,7 +216,11 @@ def main() -> int:
     pause = args.pause if args.pause is not None else (
         0.0 if args.mode == "sim" else 4.0
     )
-    evidence_dir = settings.evidence_dir
+    evidence_dir = (
+        settings.eft_evidence_dir
+        if args.suite in {"eft", "validation"}
+        else settings.evidence_dir
+    )
     progress_path = _progress_path(evidence_dir, run_id)
     completed = _load_progress(progress_path) if args.resume else set()
 
@@ -275,10 +283,11 @@ def main() -> int:
                 reset_memories()
 
                 # Prerrequisitos necesarios para memoria/persistencia.
+                session_for_case = f"{case.session}-{repetition}"
                 for prerequisite_text, prerequisite_mode in case.prerequisite:
                     run_turn(
                         prerequisite_text,
-                        session_id=case.session,
+                        session_id=session_for_case,
                         modo=prerequisite_mode,
                         category="prerequisite",
                         experiment_group=case.group,
@@ -291,7 +300,7 @@ def main() -> int:
 
                 result = run_turn(
                     case.input,
-                    session_id=f"{case.session}-{repetition}",
+                    session_id=session_for_case,
                     modo=case.mode,
                     verbose=args.verbose,
                     category=case.category,

@@ -1,0 +1,11 @@
+id,category,query,expected,hits,recall_at_k,has_internal,has_external,latency_ms,integrity_ok
+R01,externo,¿Qué temperatura de refrigeración recomienda el USDA?,"E04, E05","E05, E13, M06",0.5,True,True,2.65,True
+R02,hibrido,¿Cuánto duran los huevos crudos en refrigeración?,"E05, M01","E05, E14, M02",0.5,True,True,1.87,True
+R03,hibrido,¿Cómo almacenar huevos de codorniz?,"E01, E10, M02","M02, E10, E12",0.6667,True,True,2.0,True
+R04,externo,¿Qué dice el Codex sobre huevos rotos y trazabilidad?,"E07, E08","E08, E14, E07",1.0,False,True,1.74,True
+R05,hibrido,¿Cómo se clasifican los huevos por calidad y ovoscopía?,"E02, M08","M08, E02, E12",1.0,True,True,1.61,True
+R06,interno,¿Cuál es la tasa de postura de la codorniz?,M04,"M04, E07, M02",1.0,True,True,1.67,True
+R07,interno,¿Cómo priorizar pedidos grandes con poco stock?,"M05, M06","M05, M06",1.0,True,False,1.74,True
+R08,hibrido,¿Qué cuidados requieren los huevos de pato y ganso?,"E13, M07, M08","M08, M07, E13",1.0,True,True,2.34,True
+R09,hibrido,¿Cómo se almacenan los huevos fértiles de incubación?,"E11, M09","E11, M09, E09",1.0,True,True,1.9,True
+R10,externo,¿Qué recomienda la FDA sobre la temperatura de transporte?,E06,"E12, E06, E07",1.0,False,True,2.13,True

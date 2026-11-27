@@ -113,6 +113,9 @@ def inicializar_bd(reset: bool = False) -> None:
         "CREATE TABLE IF NOT EXISTS datos ("
         " session_id TEXT, clave TEXT, valor TEXT,"
         " PRIMARY KEY (session_id, clave))",
+        "CREATE TABLE IF NOT EXISTS memoria_resumen ("
+        " session_id TEXT PRIMARY KEY, resumen TEXT, updated_at TEXT,"
+        " turnos INTEGER DEFAULT 0)",
     ]:
         sql(statement, escribir=True)
 
@@ -186,6 +189,12 @@ def snapshot() -> dict[str, Any]:
         ),
         "datos_count": int(
             (sql("SELECT COUNT(*) AS n FROM datos") or [{"n": 0}])[0]["n"]
+        ),
+        "memoria_resumen_count": int(
+            (
+                sql("SELECT COUNT(*) AS n FROM memoria_resumen")
+                or [{"n": 0}]
+            )[0]["n"]
         ),
     }
 

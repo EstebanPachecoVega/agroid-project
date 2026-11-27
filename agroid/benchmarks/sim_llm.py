@@ -6,6 +6,7 @@ flujo completo, las herramientas, la memoria, la observabilidad y la seguridad.
 
 from __future__ import annotations
 
+import re
 from typing import Any
 
 from langchain_core.language_models.chat_models import BaseChatModel
@@ -97,9 +98,18 @@ class SimulatedLLM(BaseChatModel):
                 "cantidad o período necesitas?"
             )
         else:
+            citations = []
+            for message in steps:
+                for citation in re.findall(
+                    r"\[(?:M|E)\d{2}\]", str(message.content)
+                ):
+                    if citation not in citations:
+                        citations.append(citation)
             text = "[SIM] " + " || ".join(
                 str(message.content)[:120] for message in steps
             )
+            if citations:
+                text += " | Fuentes: " + ", ".join(citations)
         return self._result(text, messages)
 
     @staticmethod
@@ -140,6 +150,11 @@ class SimulatedLLM(BaseChatModel):
             ]
         if "recolect" in request or "produje" in request:
             return [("registrar_produccion", {"especie": "gallina", "cantidad": 500})]
+        if "déficit" in request and "prioriza" in request:
+            return [
+                ("calcular_deficit", {"dias": 0}),
+                ("priorizar_pedidos", {}),
+            ]
         if "déficit" in request and "retomando" not in request:
             return [("calcular_deficit", {"dias": 0})]
         if "falta para cumplir" in request or "revisa el déficit" in request:
@@ -149,6 +164,21 @@ class SimulatedLLM(BaseChatModel):
                 ("priorizar_pedidos", {}),
                 ("buscar_manual", {"consulta": "almacenar huevos de codorniz"}),
             ]
+        if any(
+            word in request
+            for word in (
+                "refriger",
+                "temperatura",
+                "almacen",
+                "conserva",
+                "cita",
+                "fuente externa",
+                "usda",
+                "codex",
+                "faq",
+            )
+        ):
+            return [("buscar_manual", {"consulta": request[:120]})]
         if "recuerda que" in request:
             return [
                 (

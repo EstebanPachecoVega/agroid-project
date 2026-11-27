@@ -300,6 +300,22 @@ def render_quality(frames: dict[str, pd.DataFrame]) -> None:
         st.subheader("Consistencia por grupo de reformulaciones")
         st.dataframe(consistency, width="stretch", hide_index=True)
 
+    citations = metrics.citation_summary(frames)
+    c1, c2, c3 = st.columns(3)
+    c1.metric("Casos con citas", citations["cases"])
+    c2.metric(
+        "Cobertura media",
+        f"{citations['mean']*100:.1f}%"
+        if citations["mean"] is not None
+        else "-",
+    )
+    c3.metric(
+        "Cobertura mínima",
+        f"{citations['min']*100:.1f}%"
+        if citations["min"] is not None
+        else "-",
+    )
+
     left, right = st.columns(2)
     with left:
         tools = metrics.tool_frequency(frames)
@@ -510,11 +526,34 @@ def render_trace_explorer(frames: dict[str, pd.DataFrame]) -> None:
         st.code(str(trace.get("input_redacted") or ""), language="text")
         st.subheader("Salida redactada")
         st.code(str(trace.get("output_redacted") or ""), language="text")
+        st.subheader("Presupuesto de contexto")
+        st.json(_json(trace.get("context_budget_json"), {}) or {})
     with right:
         st.subheader("Seguridad")
         st.json(_json(trace.get("security_json"), {}) or {})
         st.subheader("Anomalías")
         st.json(_json(trace.get("anomalies_json"), {}) or {})
+        st.subheader("Crítica automática")
+        st.json(_json(trace.get("critic_json"), {}) or {})
+
+    st.subheader("Plan y adaptación")
+    plan = _json(trace.get("plan_json"), {}) or {}
+    st.json(plan)
+    sources = _json(trace.get("rag_sources_json"), []) or []
+    if sources:
+        st.subheader("Fuentes recuperadas")
+        source_frame = pd.DataFrame(sources)
+        if "year" in source_frame.columns:
+            source_frame["year"] = source_frame["year"].astype(str)
+        st.dataframe(source_frame, width="stretch", hide_index=True)
+    st.caption(
+        f"Modo solicitado: {trace.get('requested_mode') or trace.get('mode')} · "
+        f"Modo efectivo: {trace.get('mode')} · "
+        f"Prompt: {trace.get('prompt_version') or '-'} · "
+        f"Replanificaciones: {int(trace.get('replan_count') or 0)} · "
+        f"Cobertura de citas: "
+        f"{trace.get('citation_coverage') if trace.get('citation_coverage') is not None else '-'}"
+    )
 
     llm = frames["llm_calls"]
     llm = llm[llm["trace_id"] == trace_id]
@@ -548,12 +587,12 @@ def render_security(frames: dict[str, pd.DataFrame]) -> None:
         else:
             st.info("Sin eventos de seguridad registrados.")
     with right:
-        st.subheader("Integridad del manual")
+        st.subheader("Integridad de corpus")
         if not integrity.empty:
             last = integrity.sort_values("checked_at").iloc[-1]
             if int(last.get("ok") or 0) == 1:
                 st.success(
-                    f"Manual verificado: {last.get('checked_at')} "
+                    f"Corpus verificado: {last.get('checked_at')} "
                     f"({last.get('reason') or 'sin cambios'})"
                 )
             else:
@@ -600,8 +639,118 @@ def render_security(frames: dict[str, pd.DataFrame]) -> None:
             st.info("No se registraron redacciones de PII ni intentos de inyección.")
 
 
+def render_rag_planning(frames: dict[str, pd.DataFrame]) -> None:
+    traces = frames.get("traces", pd.DataFrame())
+    if traces.empty:
+        st.info("Sin trazas para analizar RAG y planificación.")
+        return
+
+    mix = metrics.rag_source_mix(frames)
+    citations = metrics.citation_summary(frames)
+    left, right, third = st.columns(3)
+    left.metric("Casos con citas", citations["cases"])
+    right.metric(
+        "Cobertura media",
+        f"{citations['mean']*100:.1f}%" if citations["mean"] is not None else "-",
+    )
+    third.metric(
+        "Replanificación",
+        f"{metrics.kpis(frames)['replan_rate']*100:.1f}%"
+        if metrics.kpis(frames)["replan_rate"] is not None
+        else "-",
+    )
+
+    st.subheader("Mezcla de fuentes recuperadas")
+    if not mix.empty:
+        st.dataframe(mix, width="stretch", hide_index=True)
+        fig = px.bar(
+            mix,
+            x="source_type",
+            y="fragments",
+            title="Fragmentos recuperados por tipo de fuente",
+            labels={"source_type": "Fuente", "fragments": "Fragmentos"},
+        )
+        st.plotly_chart(fig, width="stretch")
+    else:
+        st.info("Aún no hay recuperaciones RAG registradas.")
+
+    st.subheader("Prompts y modos de ejecución")
+    prompts = metrics.prompt_version_summary(frames)
+    planning = metrics.planning_summary(frames)
+    col_left, col_right = st.columns(2)
+    with col_left:
+        if not prompts.empty:
+            st.dataframe(prompts, width="stretch", hide_index=True)
+        else:
+            st.info("Sin datos de versiones de prompt.")
+    with col_right:
+        if not planning.empty:
+            st.dataframe(planning, width="stretch", hide_index=True)
+        else:
+            st.info("Sin datos de modos de planificación.")
+
+    st.subheader("Trazas con plan y citas")
+    display_columns = [
+        column
+        for column in (
+            "trace_id",
+            "session_id",
+            "mode",
+            "requested_mode",
+            "prompt_version",
+            "replan_count",
+            "citation_coverage",
+            "status",
+            "rag_sources_json",
+        )
+        if column in traces.columns
+    ]
+    st.dataframe(
+        traces[display_columns].sort_values(
+            "trace_id", ascending=False
+        ).head(40),
+        width="stretch",
+        hide_index=True,
+    )
+
+    rows = []
+    for _, trace in traces.iterrows():
+        sources = _json(trace.get("rag_sources_json"), []) or []
+        if not sources:
+            continue
+        for source in sources:
+            if isinstance(source, dict):
+                rows.append(
+                    {
+                        "trace_id": trace.get("trace_id"),
+                        "fragment_id": source.get("fragment_id"),
+                        "source_type": source.get("source_type"),
+                        "title": source.get("title"),
+                        "score": source.get("score"),
+                        "citation": source.get("citation"),
+                    }
+                )
+            else:
+                rows.append(
+                    {
+                        "trace_id": trace.get("trace_id"),
+                        "fragment_id": str(source),
+                        "source_type": "",
+                        "title": "",
+                        "score": None,
+                        "citation": f"[{source}]",
+                    }
+                )
+    if rows:
+        st.subheader("Fuentes citables por traza")
+        frame = pd.DataFrame(rows)
+        if "year" in frame.columns:
+            frame["year"] = frame["year"].astype(str)
+        st.dataframe(frame, width="stretch", hide_index=True)
+
+
 def main() -> None:
-    st.title("🥚 AgroID Huevos · Observabilidad EP3")
+    st.title("🥚 AgroID Huevos · Observabilidad EFT")
     st.caption(
         f"LangSmith: {settings.langsmith_project} · "
         f"SQLite: {settings.obs_db_path}"
@@ -668,6 +817,7 @@ def main() -> None:
             "Resumen",
             "Rendimiento",
             "Calidad y consistencia",
+            "RAG y planificación",
             "Costos y tokens",
             "Explorador de trazas",
             "Seguridad",
@@ -680,10 +830,12 @@ def main() -> None:
     with tabs[2]:
         render_quality(filtered)
     with tabs[3]:
-        render_costs(filtered)
+        render_rag_planning(filtered)
     with tabs[4]:
-        render_trace_explorer(filtered)
+        render_costs(filtered)
     with tabs[5]:
+        render_trace_explorer(filtered)
+    with tabs[6]:
         render_security(filtered)
 
     st.sidebar.caption(

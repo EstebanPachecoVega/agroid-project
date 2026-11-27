@@ -100,6 +100,24 @@ def kpis(frames: dict[str, pd.DataFrame]) -> dict[str, Any]:
         ),
         "avg_tokens": round(total_tokens / total, 1) if total else None,
         "model_switches": switches,
+        "replan_rate": round(
+            float(
+                pd.to_numeric(
+                    traces.get("replan_count", pd.Series(dtype="float64")),
+                    errors="coerce",
+                ).fillna(0).gt(0).mean()
+            ),
+            4,
+        ) if "replan_count" in traces.columns else None,
+        "citation_coverage": round(
+            float(
+                pd.to_numeric(
+                    traces.get("citation_coverage", pd.Series(dtype="float64")),
+                    errors="coerce",
+                ).dropna().mean()
+            ),
+            4,
+        ) if "citation_coverage" in traces.columns else None,
     }
 
 
@@ -227,6 +245,7 @@ def evaluations_summary(frames: dict[str, pd.DataFrame]) -> pd.DataFrame:
         "facts_match",
         "groundedness",
         "score",
+        "citation_coverage",
     ]
     for column in numeric:
         if column not in evaluations.columns:
@@ -297,3 +316,143 @@ def model_usage(frames: dict[str, pd.DataFrame]) -> pd.DataFrame:
         .reset_index()
     )
     return grouped.sort_values("calls", ascending=False)
+
+
+def _parse_json_list(value: Any) -> list[Any]:
+    if value is None or (isinstance(value, float) and pd.isna(value)):
+        return []
+    if isinstance(value, list):
+        return value
+    try:
+        parsed = json.loads(str(value))
+        return parsed if isinstance(parsed, list) else []
+    except Exception:
+        return []
+
+
+def rag_source_mix(frames: dict[str, pd.DataFrame]) -> pd.DataFrame:
+    """Cuenta fragmentos internos y externos recuperados por turno."""
+    traces = frames.get("traces", pd.DataFrame())
+    rows: list[dict[str, Any]] = []
+    if traces.empty or "rag_sources_json" not in traces.columns:
+        return pd.DataFrame(columns=["source_type", "fragments", "traces"])
+    for _, row in traces.iterrows():
+        sources = _parse_json_list(row.get("rag_sources_json"))
+        counts = {"interno": 0, "externo": 0}
+        for source in sources:
+            if isinstance(source, dict):
+                key = str(source.get("source_type", "interno"))
+                counts[key] = counts.get(key, 0) + 1
+        if sources:
+            rows.append(
+                {
+                    "source_type": "interno",
+                    "fragments": counts.get("interno", 0),
+                }
+            )
+            rows.append(
+                {
+                    "source_type": "externo",
+                    "fragments": counts.get("externo", 0),
+                }
+            )
+    if not rows:
+        return pd.DataFrame(columns=["source_type", "fragments", "traces"])
+    frame = pd.DataFrame(rows)
+    return (
+        frame.groupby("source_type")
+        .agg(fragments=("fragments", "sum"), traces=("fragments", "count"))
+        .reset_index()
+    )
+
+
+def citation_summary(frames: dict[str, pd.DataFrame]) -> dict[str, Any]:
+    evaluations = frames.get("evaluations", pd.DataFrame())
+    traces = frames.get("traces", pd.DataFrame())
+    values: list[float] = []
+    if not evaluations.empty and "citation_coverage" in evaluations.columns:
+        values = [
+            float(value)
+            for value in pd.to_numeric(
+                evaluations["citation_coverage"], errors="coerce"
+            ).dropna()
+        ]
+    if not values and not traces.empty and "citation_coverage" in traces.columns:
+        values = [
+            float(value)
+            for value in pd.to_numeric(
+                traces["citation_coverage"], errors="coerce"
+            ).dropna()
+        ]
+    return {
+        "cases": len(values),
+        "mean": round(float(np.mean(values)), 4) if values else None,
+        "min": round(float(np.min(values)), 4) if values else None,
+        "max": round(float(np.max(values)), 4) if values else None,
+    }
+
+
+def prompt_version_summary(frames: dict[str, pd.DataFrame]) -> pd.DataFrame:
+    evaluations = frames.get("evaluations", pd.DataFrame())
+    if evaluations.empty or "mode" not in evaluations.columns:
+        return pd.DataFrame(
+            columns=["prompt_version", "cases", "score", "citation_coverage"]
+        )
+    traces = frames.get("traces", pd.DataFrame())
+    version_by_trace = {}
+    if not traces.empty and "prompt_version" in traces.columns:
+        version_by_trace = dict(
+            zip(traces["trace_id"], traces["prompt_version"])
+        )
+    data = evaluations.copy()
+    data["prompt_version"] = data["trace_id"].map(version_by_trace).fillna("v2")
+    numeric = [
+        column
+        for column in ("score", "citation_coverage", "groundedness")
+        if column in data.columns
+    ]
+    if not numeric:
+        return pd.DataFrame()
+    grouped = (
+        data.groupby("prompt_version")[numeric]
+        .mean(numeric_only=True)
+        .reset_index()
+    )
+    counts = (
+        data.groupby("prompt_version").size().reset_index(name="cases")
+    )
+    return grouped.merge(counts, on="prompt_version", how="left")
+
+
+def planning_summary(frames: dict[str, pd.DataFrame]) -> pd.DataFrame:
+    evaluations = frames.get("evaluations", pd.DataFrame())
+    if evaluations.empty or "mode" not in evaluations.columns:
+        return pd.DataFrame(
+            columns=["mode", "cases", "score", "replan_rate", "tool_match"]
+        )
+    data = evaluations.copy()
+    data["mode"] = data["mode"].fillna("react")
+    numeric = [
+        column
+        for column in ("score", "tool_match", "args_match", "groundedness")
+        if column in data.columns
+    ]
+    grouped = (
+        data.groupby("mode")[numeric]
+        .mean(numeric_only=True)
+        .reset_index()
+    )
+    counts = data.groupby("mode").size().reset_index(name="cases")
+    if "replan_count" in data.columns:
+        replans = (
+            data.assign(
+                replanned=pd.to_numeric(
+                    data["replan_count"], errors="coerce"
+                ).fillna(0).gt(0)
+            )
+            .groupby("mode")["replanned"]
+            .mean()
+            .reset_index(name="replan_rate")
+        )
+        grouped = grouped.merge(replans, on="mode", how="left")
+    return grouped.merge(counts, on="mode", how="left")

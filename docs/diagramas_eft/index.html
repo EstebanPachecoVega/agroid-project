@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="es">
+<meta charset="utf-8">
+<title>Diagramas EFT · comparación</title>
+<style>
+  :root { --ink:#0f172a; --muted:#475569; --line:#cbd5e1; --bg:#f8fafc; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:Segoe UI, Arial, sans-serif; color:var(--ink); background:var(--bg); }
+  header { padding:28px 32px 10px; }
+  h1 { margin:0 0 6px; font-size:26px; }
+  p { margin:0; color:var(--muted); max-width:1100px; line-height:1.45; }
+  main { padding:18px 32px 40px; }
+  .pair { background:white; border:1px solid var(--line); border-radius:14px; padding:18px 20px 22px; margin:18px 0; }
+  h2 { margin:0 0 12px; font-size:19px; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  figure { margin:0; }
+  img { width:100%; height:auto; border:1px solid var(--line); border-radius:8px; background:white; }
+  figcaption { margin-top:8px; font-size:13px; color:var(--muted); line-height:1.4; }
+  .hint { margin-top:12px; padding:12px 14px; background:#fff7ed; border-left:4px solid #d97706; border-radius:6px; color:#7c2d12; }
+  @media (max-width:1000px) { .grid { grid-template-columns:1fr; } }
+</style>
+<header>
+  <h1>Diagramas EFT · comparación de estilos</h1>
+  <p>Dos familias generadas desde el mismo modelo lógico. Abre cada imagen en tamaño completo para revisar las puntas de flecha, etiquetas y conexiones. El informe ya usa la versi?n t?cnica y la defensa usa la ejecutiva. Puedes cambiar la combinaci?n cuando quieras.</p>
+  <div class="hint">Recomendación: usa <b>técnico minimalista</b> en el informe y <b>ejecutivo con swimlanes</b> en la defensa. Si prefieres uno solo, el ejecutivo se lee mejor proyectado. <a href="comparacion.png">Ver contact sheet</a>.</div>
+</header>
+<main>
+
+            <section class="pair">
+              <h2>Arquitectura</h2>
+              <div class="grid">
+                <figure>
+                  <a href="tecnico/diagrama_arquitectura.png"><img src="tecnico/diagrama_arquitectura.png" alt="Arquitectura técnico"></a>
+                  <figcaption><b>Técnico minimalista</b><br>Líneas finas, sin números, foco en el flujo.</figcaption>
+                </figure>
+                <figure>
+                  <a href="ejecutivo/diagrama_arquitectura.png"><img src="ejecutivo/diagrama_arquitectura.png" alt="Arquitectura ejecutivo"></a>
+                  <figcaption><b>Ejecutivo con swimlanes</b><br>Bandas de responsabilidad, cajas más grandes, lectura para presentación.</figcaption>
+                </figure>
+              </div>
+            </section>
+            
+            <section class="pair">
+              <h2>RAG híbrido</h2>
+              <div class="grid">
+                <figure>
+                  <a href="tecnico/diagrama_rag_hibrido.png"><img src="tecnico/diagrama_rag_hibrido.png" alt="RAG híbrido técnico"></a>
+                  <figcaption><b>Técnico minimalista</b><br>Líneas finas, sin números, foco en el flujo.</figcaption>
+                </figure>
+                <figure>
+                  <a href="ejecutivo/diagrama_rag_hibrido.png"><img src="ejecutivo/diagrama_rag_hibrido.png" alt="RAG híbrido ejecutivo"></a>
+                  <figcaption><b>Ejecutivo con swimlanes</b><br>Bandas de responsabilidad, cajas más grandes, lectura para presentación.</figcaption>
+                </figure>
+              </div>
+            </section>
+            
+            <section class="pair">
+              <h2>Planificación</h2>
+              <div class="grid">
+                <figure>
+                  <a href="tecnico/diagrama_planificacion.png"><img src="tecnico/diagrama_planificacion.png" alt="Planificación técnico"></a>
+                  <figcaption><b>Técnico minimalista</b><br>Líneas finas, sin números, foco en el flujo.</figcaption>
+                </figure>
+                <figure>
+                  <a href="ejecutivo/diagrama_planificacion.png"><img src="ejecutivo/diagrama_planificacion.png" alt="Planificación ejecutivo"></a>
+                  <figcaption><b>Ejecutivo con swimlanes</b><br>Bandas de responsabilidad, cajas más grandes, lectura para presentación.</figcaption>
+                </figure>
+              </div>
+            </section>
+            
+            <section class="pair">
+              <h2>Trazas</h2>
+              <div class="grid">
+                <figure>
+                  <a href="tecnico/diagrama_trazas.png"><img src="tecnico/diagrama_trazas.png" alt="Trazas técnico"></a>
+                  <figcaption><b>Técnico minimalista</b><br>Líneas finas, sin números, foco en el flujo.</figcaption>
+                </figure>
+                <figure>
+                  <a href="ejecutivo/diagrama_trazas.png"><img src="ejecutivo/diagrama_trazas.png" alt="Trazas ejecutivo"></a>
+                  <figcaption><b>Ejecutivo con swimlanes</b><br>Bandas de responsabilidad, cajas más grandes, lectura para presentación.</figcaption>
+                </figure>
+              </div>
+            </section>
+            
+</main>
+</html>

@@ -18,6 +18,11 @@ TESTS = [
     "tests/test_tools.py",
     "tests/test_evaluator.py",
     "tests/test_agent_sim.py",
+    "tests/test_prompts.py",
+    "tests/test_rag_hybrid.py",
+    "tests/test_planning.py",
+    "tests/test_memory_long_flow.py",
+    "tests/test_context_budget.py",
 ]
 
 

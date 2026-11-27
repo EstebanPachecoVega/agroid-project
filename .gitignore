@@ -11,6 +11,7 @@ data/*.db-*
 data/*.sqlite
 data/*.sqlite-*
 logs/
+logs_eft/
 datos_agroid/
 
 # Evidencia cruda (se exporta y revisa antes de commitear)
@@ -20,6 +21,10 @@ docs/evidencias/*.csv
 docs/evidencias/*.db
 docs/evidencias/*.log
 docs/evidencias/progress_*.json
+docs/evidencias_eft/tmp_*/
+docs/evidencias_eft/_slide*.png
+docs/defensa_eft/_slide*.png
+docs/_preview_*.png
 
 # Python
 __pycache__/

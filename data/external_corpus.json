@@ -1,0 +1,160 @@
+{
+  "version": 1,
+  "descripcion": "Corpus técnico externo de AgroID Huevos. Contiene paráfrasis breves en español de fuentes públicas de referencia sobre manejo, almacenamiento y seguridad de huevos. No reemplaza la fuente original ni constituye asesoría alimentaria; cada fragmento declara autor, año y URL para su contraste.",
+  "fragments": [
+    {
+      "id": "E01",
+      "tema": "almacenamiento, temperatura y rotación",
+      "texto": "Para conservar la calidad, los huevos deben mantenerse en un lugar fresco, seco y protegido de olores fuertes. La guía de comercialización de la FAO recomienda manipularlos con cuidado, mantener los envases limpios y aplicar rotación primero en entrar, primero en salir.",
+      "source_type": "externo",
+      "title": "Egg marketing: A guide for the production and sale of eggs",
+      "author": "FAO",
+      "year": 2003,
+      "url": "https://www.fao.org/4/y4628e/y4628e00.htm",
+      "nota": "Paráfrasis en español del capítulo de empaque, transporte y almacenamiento."
+    },
+    {
+      "id": "E02",
+      "tema": "calidad y clasificación",
+      "texto": "La calidad del huevo se evalúa por limpieza de la cáscara, integridad, forma, tamaño y estado interno. La ovoscopía permite detectar grietas, manchas y alteraciones internas; los huevos sucios, rotos o con olores extraños deben separarse del lote comercial.",
+      "source_type": "externo",
+      "title": "Egg marketing: A guide for the production and sale of eggs",
+      "author": "FAO",
+      "year": 2003,
+      "url": "https://www.fao.org/4/y4628e/y4628e00.htm",
+      "nota": "Paráfrasis del capítulo de criterios de calidad y clasificación."
+    },
+    {
+      "id": "E03",
+      "tema": "planificación de la producción y demanda",
+      "texto": "La producción orientada al mercado requiere estimar la demanda, los precios y los canales de venta. Planificar la producción con información de mercado ayuda a reducir pérdidas y a ajustar el volumen y la periodicidad de la oferta.",
+      "source_type": "externo",
+      "title": "Egg marketing: A guide for the production and sale of eggs",
+      "author": "FAO",
+      "year": 2003,
+      "url": "https://www.fao.org/4/y4628e/y4628e00.htm",
+      "nota": "Paráfrasis de la introducción y del capítulo de precios y ventas."
+    },
+    {
+      "id": "E04",
+      "tema": "refrigeración y Salmonella",
+      "texto": "Los huevos recolectados deben refrigerarse lo antes posible para reducir el crecimiento de Salmonella. Una vez refrigerados, no conviene dejarlos a temperatura ambiente por más de dos horas, porque el huevo puede sudar y facilitar el ingreso de bacterias.",
+      "source_type": "externo",
+      "title": "Shell Eggs from Farm to Table",
+      "author": "USDA Food Safety and Inspection Service",
+      "year": 2024,
+      "url": "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/eggs/shell-eggs-farm-table",
+      "nota": "Paráfrasis de la sección Why Should Eggs Be Refrigerated?"
+    },
+    {
+      "id": "E05",
+      "tema": "vida útil en refrigeración",
+      "texto": "Los huevos crudos con cáscara se conservan aproximadamente de tres a cinco semanas en refrigeración y no deben congelarse dentro de la cáscara. La referencia del USDA indica mantener el refrigerador a 40 °F (4,4 °C) o menos.",
+      "source_type": "externo",
+      "title": "Shell Eggs from Farm to Table",
+      "author": "USDA Food Safety and Inspection Service",
+      "year": 2024,
+      "url": "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/eggs/shell-eggs-farm-table",
+      "nota": "Paráfrasis de la tabla de almacenamiento y de las recomendaciones de refrigeración."
+    },
+    {
+      "id": "E06",
+      "tema": "control regulatorio de temperatura",
+      "texto": "La FDA (U.S. Food and Drug Administration) exige, para los huevos de mesa cubiertos, mantenerlos y transportarlos a una temperatura ambiente de 45 °F (7,2 °C) o menos, comenzando 36 horas después de la puesta, con excepciones acotadas para el procesamiento.",
+      "source_type": "externo",
+      "title": "21 CFR Part 118: Production, Storage, and Transportation of Shell Eggs",
+      "author": "U.S. Food and Drug Administration",
+      "year": 2026,
+      "url": "https://www.ecfr.gov/current/title-21/part-118",
+      "nota": "Paráfrasis del requisito de refrigeración de 21 CFR 118.4(e)."
+    },
+    {
+      "id": "E07",
+      "tema": "higiene y análisis de peligros",
+      "texto": "El Código de Prácticas de Higiene para Huevos y Productos de Huevo del Codex aplica un enfoque de análisis de peligros a la producción primaria, clasificación, almacenamiento, transporte y distribución. La Salmonella es un peligro relevante y su control combina higiene, temperatura y trazabilidad.",
+      "source_type": "externo",
+      "title": "Code of Hygienic Practice for Eggs and Egg Products (CXC 15-1976)",
+      "author": "FAO/WHO Codex Alimentarius",
+      "year": 2007,
+      "url": "https://www.fao.org/fao-who-codexalimentarius/sh-proxy/en?lnk=1&url=https%3A%2F%2Fworkspace.fao.org%2Fsites%2Fcodex%2FStandards%2FCXC%2B15-1976%2FCXC_015e.pdf",
+      "nota": "Paráfrasis de la introducción, objetivos y sección de control de peligros."
+    },
+    {
+      "id": "E08",
+      "tema": "huevos dañados y trazabilidad",
+      "texto": "Los huevos rotos o visiblemente sucios deben excluirse del consumo humano directo y separarse de los lotes limpios. El Codex recomienda mantener registros que permitan rastrear el origen, el procesamiento y el destino de los lotes.",
+      "source_type": "externo",
+      "title": "Code of Hygienic Practice for Eggs and Egg Products (CXC 15-1976)",
+      "author": "FAO/WHO Codex Alimentarius",
+      "year": 2007,
+      "url": "https://www.fao.org/fao-who-codexalimentarius/sh-proxy/en?lnk=1&url=https%3A%2F%2Fworkspace.fao.org%2Fsites%2Fcodex%2FStandards%2FCXC%2B15-1976%2FCXC_015e.pdf",
+      "nota": "Paráfrasis de las secciones de manejo, clasificación y registros."
+    },
+    {
+      "id": "E09",
+      "tema": "huevos de mesa versus incubación",
+      "texto": "La extensión de la Universidad de Georgia recomienda refrigerar los huevos de mesa a 45-55 °F (7-13 °C) dentro de las 72 horas posteriores a la puesta. Los huevos para incubación se conservan cerca de 65 °F (18 °C) y no deben lavarse.",
+      "source_type": "externo",
+      "title": "How the Small Producer Can Maintain Good Egg Quality of Table and Hatching Eggs",
+      "author": "University of Georgia Cooperative Extension",
+      "year": 2021,
+      "url": "https://fieldreport.caes.uga.edu/wp-content/uploads/2025/08/C-1230_2.pdf",
+      "nota": "Paráfrasis de las recomendaciones de almacenamiento para huevos de mesa y de incubación."
+    },
+    {
+      "id": "E10",
+      "tema": "buenas prácticas de almacenamiento",
+      "texto": "El American Egg Board recomienda almacenar los huevos en su envase, a 40 °F (4,4 °C) o menos, lejos de alimentos con olores fuertes, y rotar el inventario con la regla primero en entrar, primero en salir. No se recomienda lavar los huevos antes de usarlos.",
+      "source_type": "externo",
+      "title": "Egg Storage and Handling",
+      "author": "American Egg Board",
+      "year": 2023,
+      "url": "https://www.incredibleegg.org/professionals/foodservice/egg-safety-handling/egg-storage-and-handling",
+      "nota": "Paráfrasis de las recomendaciones de almacenamiento y manipulación."
+    },
+    {
+      "id": "E11",
+      "tema": "huevos fértiles de incubación",
+      "texto": "Para huevos fértiles destinados a incubación, INIA recomienda recogerlos con frecuencia, desinfectarlos idealmente dentro de las primeras dos horas y almacenarlos a 13-14 °C con aproximadamente 65 % de humedad relativa, por no más de cinco a siete días.",
+      "source_type": "externo",
+      "title": "Inseminación artificial en aves",
+      "author": "INIA Chile",
+      "year": 1981,
+      "url": "https://biblioteca.inia.cl/server/api/core/bitstreams/cc10eb89-03e7-4cae-9268-0dde36f7d47a/content",
+      "nota": "Paráfrasis del capítulo de manejo de huevos fértiles; aplica a incubación, no a huevos de mesa."
+    },
+    {
+      "id": "E12",
+      "tema": "transporte y empaque",
+      "texto": "El transporte de huevos debe realizarse en envases rígidos, limpios y ventilados, evitando vibraciones, exposición directa al sol y cambios bruscos de temperatura. La guía de la FAO enfatiza que el empaque protege tanto la integridad física como la calidad del producto.",
+      "source_type": "externo",
+      "title": "Egg marketing: A guide for the production and sale of eggs",
+      "author": "FAO",
+      "year": 2003,
+      "url": "https://www.fao.org/4/y4628e/y4628e00.htm",
+      "nota": "Paráfrasis del capítulo de empaque, transporte y almacenamiento."
+    },
+    {
+      "id": "E13",
+      "tema": "huevos agrietados y cocción",
+      "texto": "Las grietas en la cáscara permiten el ingreso de bacterias. El USDA recomienda no comprar huevos agrietados y cocinar completamente los huevos y los alimentos que los contienen; los huevos cocidos deben refrigerarse y consumirse dentro de aproximadamente una semana.",
+      "source_type": "externo",
+      "title": "Shell Eggs from Farm to Table",
+      "author": "USDA Food Safety and Inspection Service",
+      "year": 2024,
+      "url": "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/eggs/shell-eggs-farm-table",
+      "nota": "Paráfrasis de las secciones de grietas, cocción y almacenamiento."
+    },
+    {
+      "id": "E14",
+      "tema": "educación del consumidor y trazabilidad",
+      "texto": "El Codex recomienda educar al consumidor sobre refrigeración, manipulación higiénica, cocción completa y separación de huevos crudos de otros alimentos. También recomienda identificar los lotes para poder retirarlos del mercado si aparece un problema de seguridad.",
+      "source_type": "externo",
+      "title": "Code of Hygienic Practice for Eggs and Egg Products (CXC 15-1976)",
+      "author": "FAO/WHO Codex Alimentarius",
+      "year": 2007,
+      "url": "https://www.fao.org/fao-who-codexalimentarius/sh-proxy/en?lnk=1&url=https%3A%2F%2Fworkspace.fao.org%2Fsites%2Fcodex%2FStandards%2FCXC%2B15-1976%2FCXC_015e.pdf",
+      "nota": "Paráfrasis de las secciones de información al consumidor y retiro de productos."
+    }
+  ]
+}

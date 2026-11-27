@@ -1,0 +1,15 @@
+{
+  "traces": 10,
+  "success_rate": 0.9,
+  "error_rate": 0.0,
+  "blocked_rate": 0.1,
+  "latency_p50_ms": 81.0,
+  "latency_p95_ms": 706.7014999999989,
+  "total_tokens": 14355,
+  "cost_usd": 0.0,
+  "cost_equivalent_usd": 0.001557,
+  "avg_tokens": 1435.5,
+  "model_switches": 0,
+  "replan_rate": 0.0,
+  "citation_coverage": 1.0
+}
