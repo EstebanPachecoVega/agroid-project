@@ -343,6 +343,12 @@ def rag_source_mix(frames: dict[str, pd.DataFrame]) -> pd.DataFrame:
             if isinstance(source, dict):
                 key = str(source.get("source_type", "interno"))
                 counts[key] = counts.get(key, 0) + 1
+            else:
+                # Las trazas importadas guardan solo el identificador
+                # (``["E05", "M01"]``); el prefijo permite inferir el tipo.
+                fragment_id = str(source).strip().upper()
+                key = "externo" if fragment_id.startswith("E") else "interno"
+                counts[key] = counts.get(key, 0) + 1
         if sources:
             rows.append(
                 {

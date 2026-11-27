@@ -1,4 +1,4 @@
-"""Dashboard Streamlit de observabilidad AgroID EP3."""
+"""Dashboard Streamlit de observabilidad AgroID Huevos EFT."""
 
 from __future__ import annotations
 
@@ -20,7 +20,7 @@ from agroid.observability import metrics
 from agroid.observability import store
 
 st.set_page_config(
-    page_title="AgroID · Observabilidad EP3",
+    page_title="AgroID · Observabilidad EFT",
     page_icon="🥚",
     layout="wide",
 )
@@ -766,7 +766,13 @@ def main() -> None:
         run_options += sorted(
             str(value) for value in runs["run_id"].dropna().unique()
         )
-    run_id = st.sidebar.selectbox("Run", run_options)
+    default_run = str(st.query_params.get("run", "Todos"))
+    run_index = (
+        run_options.index(default_run)
+        if default_run in run_options
+        else 0
+    )
+    run_id = st.sidebar.selectbox("Run", run_options, index=run_index)
 
     traces = frames.get("traces", pd.DataFrame())
     groups = sorted(

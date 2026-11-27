@@ -8,6 +8,8 @@ import sys
 import tempfile
 from pathlib import Path
 
+import pandas as pd
+
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 os.environ["LANGSMITH_TRACING"] = "false"
@@ -192,6 +194,22 @@ def test_metrics_and_cost():
     assert free["cost_equivalent_usd"] > 0
     paid = settings.cost_for("openai/gpt-4o-mini", 1_000_000, 1_000_000)
     assert paid["cost_usd"] > 0
+
+
+def test_rag_source_mix_string_ids():
+    """Las trazas importadas guardan IDs ("E05", "M01"), no diccionarios."""
+    frame = pd.DataFrame(
+        [
+            {"rag_sources_json": '["E05", "E06", "M01"]'},
+            {"rag_sources_json": '["M02", "E01"]'},
+            {"rag_sources_json": "[]"},
+        ]
+    )
+    mix = metrics.rag_source_mix({"traces": frame})
+    counts = dict(zip(mix["source_type"], mix["fragments"]))
+    assert counts["externo"] == 3
+    assert counts["interno"] == 2
+    assert set(mix["traces"]) == {2}
 
 
 def main():

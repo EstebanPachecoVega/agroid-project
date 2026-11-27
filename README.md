@@ -7,7 +7,7 @@ Proyecto de la **Evaluación Final Transversal (EFT) de ISY0101**. El agente con
 **Caso:** AgroID Huevos, PYME avícola verosímil con datos simulados  
 **Notebook EFT:** [`AgroID_Huevos_EFT.ipynb`](AgroID_Huevos_EFT.ipynb)  
 **Informe EFT:** [`docs/INFORME_EFT.md`](docs/INFORME_EFT.md) · [`docs/INFORME_EFT.pdf`](docs/INFORME_EFT.pdf)  
-**Defensa:** [`docs/defensa_eft/`](docs/defensa_eft/)  
+**Defensa:** [`docs/defensa_eft/`](docs/defensa_eft/) · [`diapositivas.pptx`](docs/defensa_eft/diapositivas.pptx) (15 láminas, notas y tiempos)  
 **Evidencia EFT:** [`docs/evidencias_eft/`](docs/evidencias_eft/)  
 **Checklist de entrega:** [`docs/CHECKLIST_ENTREGA_EFT.md`](docs/CHECKLIST_ENTREGA_EFT.md)
 

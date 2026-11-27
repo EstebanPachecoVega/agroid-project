@@ -1,0 +1,40 @@
+[
+  {
+    "case_id": "E01",
+    "trace_id": "4b2d993dfdf54731ba0f695631d90806",
+    "status": "success",
+    "mode": "react",
+    "duration_ms": 6871.66,
+    "tokens": 5180,
+    "tools": [
+      "buscar_manual"
+    ],
+    "output": "Según el USDA, la temperatura de refrigeración recomendada es de **40 °F (4,4 °C) o menos**, y los huevos crudos con cáscara conservan una vida útil de **aproximadamente 3 a 5 semanas** en refrigeración. [E05]"
+  },
+  {
+    "case_id": "E03",
+    "trace_id": "3f31231d2e97452d846b507d2e69eb90",
+    "status": "success",
+    "mode": "plan",
+    "duration_ms": 20189.74,
+    "tokens": 9154,
+    "tools": [
+      "calcular_deficit",
+      "priorizar_pedidos"
+    ],
+    "output": "El déficit actual es de **1000 huevos de gallina** y **500 de codorniz** para los horizontes de 5 y 4 días respectivamente, pero el stock proyectado ("
+  },
+  {
+    "case_id": "E05",
+    "trace_id": "c617f1f5ea7d49beadb9ada008ffe466",
+    "status": "success",
+    "mode": "plan",
+    "duration_ms": 80568.94,
+    "tokens": 8598,
+    "tools": [
+      "registrar_pedido",
+      "priorizar_pedidos"
+    ],
+    "output": "Pedido #5 registrado: Clínica Sur, 900 huevos de gallina, entrega antes de 2026-11-28.\n\nRepriorización actualizada:\n1. **Clínica Sur** (pedido #5): 900 huevos gallina — **cumplible** (0 faltante).\n2. Restaurante Don Pepe (pedido #1): 600 huevos gallina — **parcial**, falta 100.\n3. Hotel Costa (pedido #4): 150 huevos pato — **cumplible**.\n4. Mayorista Andes (pedido #3): 2000 huevos codorniz — **cumplible**.\n5. Panadería La Espiga (pedido #2): 1200 huevos gallina — **parcial**, falta 300.\n\nEl pedido urgente de Clínica Sur se puede cubrir totalmente con el stock y la producción esperada para mañana."
+  }
+]

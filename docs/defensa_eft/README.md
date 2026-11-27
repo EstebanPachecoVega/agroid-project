@@ -1,53 +1,64 @@
 # Defensa EFT · Paquete de materiales
 
-Esta carpeta es independiente del informe. Puedes eliminarla sin afectar el PDF ni el notebook; solo tendrías que quitar la referencia del anexo E si decides no entregarla.
+**Deck principal:** `docs/defensa_eft/diapositivas.pptx`  
+**Formato:** 20 × 11,25 in (16:9), 15 láminas: 14 de presentación + anexo.  
+**Tiempo objetivo:** 9:00; máximo 10:00.  
+**Diseño:** réplica del sistema visual de la PPT de la EP3 (navy `#0B2545`, amarillo `#FDB913`, Calibri, barra lateral y pie). Las láminas 3, 7 y 8 usan los diagramas ejecutivos en PNG; el resto se construyó con shapes nativos.
 
 ## Contenido
 
 | Archivo | Uso |
 |---|---|
-| `guion_10min.md` | Guion minuto a minuto, con énfasis por integrante. |
-| `qa.md` | 28 preguntas probables con respuestas y evidencia. |
-| `demo.md` | Demo paso a paso y planes de respaldo. |
-| `diapositivas.pdf` | 11 diapositivas para proyectar. |
+| `diapositivas.pptx` | Deck editable con notas del orador y tiempos por lámina. |
+| `guion_10min.md` | Guion minuto a minuto, tabla de tiempos y énfasis por integrante. |
+| `demo.md` | Demo pregrabada de 40 s y plan B de 20 s. |
+| `qa.md` | 31 preguntas probables, respuestas y mapa de evidencia. |
+| `evidencias/` | Capturas del dashboard, LangSmith, gráficos y waterfall. |
+| `evidencias/preview/` | PNG de las 15 láminas para revisión rápida. |
+| `evidencias/README.md` | Procedencia de cada captura y gráfico. |
 | `README.md` | Este archivo. |
 
-## Cómo ensayar
-
-1. Leer el guion una vez completo.
-2. Ensayar con cronómetro: 10 minutos máximo.
-3. Ensayar la demo con el notebook ya ejecutado y el dashboard abierto.
-4. Probar el plan B sin internet.
-5. Responder 5 preguntas aleatorias de `qa.md` en voz alta.
-
-## Orden sugerido de diapositivas
+## Orden de las 15 láminas
 
 1. Portada.
 2. Caso y problema.
-3. Solución y arquitectura.
-4. Prompts y RAG.
-5. Agente, memoria y planificación.
-6. Demo.
-7. Observabilidad y resultados.
-8. Análisis de trazas.
-9. Seguridad y ética.
-10. Mejoras y escalabilidad.
-11. Conclusión y cierre.
+3. Arquitectura EFT.
+4. Resultados reales EFT.
+5. Hallazgos por caso.
+6. Prompts versionados.
+7. RAG híbrido.
+8. Planificación adaptativa.
+9. Dashboard EFT.
+10. LangSmith y traza real E03.
+11. Demo pregrabada.
+12. Seguridad y ética.
+13. Mejoras y roadmap.
+14. Conclusión.
+15. Anexo: tabla de 8 casos y preguntas de respaldo.
+
+## Cómo ensayar
+
+1. Abrir el PPTX y probar las notas del orador.
+2. Ensayar con cronómetro: 9:00 objetivo, 10:00 máximo.
+3. Abrir el dashboard en `http://localhost:8501/?run=real-eft-20261127&solo_reales=1`.
+4. Abrir LangSmith en la traza `visual-E03` (opcional).
+5. Probar el plan B sin internet usando solo el deck.
+
+## Cómo regenerar
+
+```bash
+python docs/generar_graficos_defensa.py
+python docs/generar_ppt_eft.py
+```
+
+El generador usa las capturas de `docs/defensa_eft/evidencias/` y los datos de `docs/evidencias_eft/`. Si cambias una cifra, actualiza el JSON y vuelve a ejecutar ambos comandos.
 
 ## Si hay que recortar
 
-- No recortes resultados ni conclusión.
-- Puedes recortar la demo de memoria y el waterfall.
-- Puedes saltar la diapositiva de análisis de trazas si el tiempo apremia, pero menciona el hallazgo del router.
+- No recortes resultados, seguridad ni conclusión.
+- Puedes saltar el detalle de la traza o el panel 3 de la demo.
+- Si el tiempo apremia, menciona el hallazgo del router y las citas sin abrir el anexo.
 
-## Cómo eliminar
+## Nota sobre la captura de LangSmith
 
-```powershell
-Remove-Item -Recurse -Force docs\defensa_eft
-```
-
-Luego elimina la fila “Defensa” del anexo E del informe y reconstruye el PDF:
-
-```powershell
-python docs\generar_informe_eft.py
-```
+La traza E03 y la lista de trazas son de la corrida EFT del 27/11/2026. La captura de overview de la EP3 se conserva solo como evidencia histórica de la instrumentación; el deck final usa la traza EFT real.

@@ -23,14 +23,14 @@
 
 | Archivo | Qué contiene |
 |---|---|
-| `docs/INFORME_EFT.md` / `.pdf` | Informe académico de 22 páginas. |
+| `docs/INFORME_EFT.md` / `.pdf` | Informe académico de 26 páginas. |
 | `AgroID_Huevos_EFT.ipynb` | Notebook autocontenido ejecutado. |
 | `docs/evidencias_eft/resultados_eft.json` | Suite real EFT. |
 | `docs/evidencias_eft/rag_eval_*.json` | Evaluación RAG. |
 | `docs/evidencias_eft/prompt_eval_*.json` | Rúbrica y regresión de prompts. |
 | `docs/evidencias_eft/planning_eval_*.json` | Comparación react/plan/auto. |
-| `docs/defensa_eft/` | Guion, Q&A, demo y diapositivas. |
-| `tests/` | 50 pruebas automatizadas. |
+| `docs/defensa_eft/` | Guion, Q&A, demo pregrabada y PPTX de 15 láminas. |
+| `tests/` | 51 pruebas automatizadas. |
 
 ## Comandos de verificación
 

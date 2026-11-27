@@ -723,7 +723,7 @@ Yao, S., Zhao, J., Yu, D., Du, N., Shafran, I., Narasimhan, K., & Cao, Y. (2023)
 | `docs/evidencias_eft/planning_eval_*.json` | Comparación react/plan/auto. |
 | `docs/evidencias_eft/RESULTADOS_EFT.md` | Resumen legible. |
 | `docs/evidencias/` | Evidencia EP3, LangSmith y dashboard. |
-| `tests/` | 50 pruebas automatizadas. |
+| `tests/` | 51 pruebas automatizadas. |
 
 ### Anexo C. Mapa de código y comandos
 

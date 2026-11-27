@@ -6,10 +6,10 @@
 ## Entregables
 
 - [x] Informe EFT en Markdown: `docs/INFORME_EFT.md`.
-- [x] Informe EFT en PDF: `docs/INFORME_EFT.pdf` (22 páginas).
+- [x] Informe EFT en PDF: `docs/INFORME_EFT.pdf` (26 páginas).
 - [x] Notebook autocontenido: `AgroID_Huevos_EFT.ipynb` (122 celdas, ejecutado sin errores).
 - [x] Evidencia EFT: `docs/evidencias_eft/`.
-- [x] Defensa: `docs/defensa_eft/` (guion, Q&A, demo y diapositivas).
+- [x] Defensa: `docs/defensa_eft/` (PPTX de 15 l?minas, guion, Q&A y demo pregrabada).
 - [x] Matriz de cumplimiento: `docs/MATRIZ_CUMPLIMIENTO_EFT.md`.
 - [x] Análisis de riesgos: `docs/ANALISIS_RIESGOS_EFT.md`.
 - [x] Arquitectura: `docs/ARQUITECTURA_EFT.md`.
@@ -18,7 +18,7 @@
 
 ## Verificación técnica
 
-- [x] `python tests/run_all.py` → 50 pruebas aprobadas.
+- [x] `python tests/run_all.py` → 51 pruebas aprobadas.
 - [x] Suite simulada EFT → 8 casos, score 0,996, 0 errores.
 - [x] Suite real EFT → 8 casos, score 0,956, 7 éxito + 1 bloqueado.
 - [x] RAG eval → recall@3 0,867, integridad OK.
@@ -71,18 +71,19 @@ python -m agroid.benchmarks.prompt_eval
 python -m agroid.benchmarks.planning_eval
 python docs/generar_notebook_eft.py
 python docs/generar_informe_eft.py
-python docs/generar_defensa_eft.py
+python docs/generar_ppt_eft.py
 ```
 
 ## Archivos que se suben a AVA
 
 1. `docs/INFORME_EFT.pdf`.
 2. `AgroID_Huevos_EFT.ipynb`.
-3. Opcional: repositorio o enlace, si el docente lo solicita.
+3. Defensa (si se solicita): `docs/defensa_eft/diapositivas.pptx`.
+4. Opcional: repositorio o enlace, si el docente lo solicita.
 
 ## Antes de enviar
 
 - Revisar que el nombre del docente y la fecha estén correctos.
 - Revisar que las reflexiones individuales tengan el nombre y la voz de cada integrante.
-- Confirmar que el PDF abre y que el notebook ejecuta en Colab.
+- Confirmar que el informe PDF abre, que el PPTX abre con notas y que el notebook ejecuta en Colab.
 - Enviar copia al correo del docente dentro del plazo.

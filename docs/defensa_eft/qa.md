@@ -2,6 +2,27 @@
 
 **Uso:** leer una vez, practicar en voz alta y llevar solo las ideas fuerza. No memorizar párrafos completos. Cada respuesta incluye una evidencia concreta.
 
+## ¿Dónde está la evidencia?
+
+| Pregunta | Archivo o captura | Dato |
+|---|---|---|
+| Resultados de los 8 casos | `docs/evidencias_eft/resultados_eft.json` / `.csv` | score 0,956; 7 éxito + 1 bloqueo |
+| RAG | `rag_eval_20261127-125855.json` | recall@3 0,867; 24 fragmentos |
+| Prompts | `prompt_eval_20261127-124003.json` | v1 0,90 → v2 1,00; regresión 0,996 |
+| Planificación | `planning_eval_20261127-124005.json` | react/plan/auto 0,994 |
+| Dashboard | `docs/defensa_eft/evidencias/dashboard_*.png` | resumen, calidad, RAG y traza |
+| LangSmith | `langsmith_eft_trace_e03.png` y `langsmith_eft_list.png` | traza E03: 18,44 s; 9.154 tokens |
+| Traza y spans | `chart_waterfall_e03.png` + `data/observability.db` | 4 LLM + 2 tools |
+| Seguridad | `tests/test_security.py` | 7/7 pruebas |
+| Notebook | `AgroID_Huevos_EFT.ipynb` | salidas reales/simuladas |
+
+**Captura de LangSmith.** La traza de E03 se capturó del proyecto `agroid-huevos-ep3` el 27/11/2026. La lista muestra 4 trazas reales EFT y varias simuladas. Es evidencia real, no un mockup.
+
+**Diferencia de latencias.** La suite `real-eft-20261127` registró E03 en 10,64 s; la corrida corta `real-eft-visual-20261127` registró 18,44 s. Son ejecuciones distintas del mismo caso: la variabilidad del modelo free es parte del hallazgo. No se debe mezclar una cifra con la otra.
+
+**Diferencia de conteos.** El dashboard está filtrado a `real-eft-20261127` (8 trazas). LangSmith muestra 19 trazas del proyecto porque incluye la corrida real, la visual y las simuladas. El filtro por `run_id` o `session_id` explica la diferencia.
+
+
 ## Sobre el caso y el alcance
 
 **1. ¿Por qué AgroID Huevos y no un caso genérico?**  
@@ -56,10 +77,10 @@ Porque el modelo cita una fuente aunque recupere tres. Es una brecha de prompt/g
 Porque se auditó el evaluador: se detectaron falsos negativos en N05/N06 y se corrigieron en `rescore.py`. Además, se contrastan cifras contra SQLite y LangSmith. La muestra es pequeña; se declara.
 
 **16. ¿Por qué el router cambia de modelo?**  
-Porque `openrouter/free` enruta aleatoriamente entre modelos gratuitos. En 7 de 8 trazas cambió; al fijar `nemotron`, la consistencia subió a Jaccard 1,0. Evidencia: tabla EP3 y capturas de LangSmith.
+Porque `openrouter/free` enruta aleatoriamente entre modelos gratuitos. En la EP3 cambió en 7 de 8 trazas; al fijar `nemotron`, la consistencia subió a Jaccard 1,0. Evidencia: tabla EP3 y capturas de LangSmith. En EFT se usó modelo fijado para reducir esa variable.
 
-**17. ¿Qué significa el P95 de 21,7 s del dashboard?**  
-Es el percentil 95 de 126 trazas históricas, incluyendo errores y modelos free. La suite EFT real tuvo P95 menor; la latencia depende del proveedor. No es un SLO de producción.
+**17. ¿Qué significa el P95 de 15,7 s del dashboard EFT?**  
+Es el percentil 95 de las 8 trazas reales de `real-eft-20261127`, con modelo free y un caso bloqueado. La media fue 8,1 s y el máximo 17,1 s. No es un SLO de producción; es una fotografía de la corrida. La EP3 tenía un P95 histórico de 21,7 s sobre 126 trazas.
 
 ## Sobre seguridad y ética
 
@@ -99,3 +120,12 @@ Se dejó preparada la suite `validation` con `LLM_MODEL_STRONG`, pero el equipo 
 
 **28. “¿No es peligroso que el agente escriba en la base?”**  
 Sí, por eso hay límite de 3 escrituras, validación, ambigüedad y confirmación humana propuesta. En la demo, las escrituras son simuladas y la traza queda registrada.
+
+**29. “¿La captura de LangSmith es de esta entrega o de la EP3?”**  
+La traza E03 y la lista son de la corrida EFT del 27/11/2026 (`visual-E03`). La captura de overview de la EP3 se usó como referencia histórica de la instrumentación, pero el deck final usa la traza EFT real.
+
+**30. “¿Por qué no hacen la demo en vivo?”**  
+Porque los 8 casos reales consumen cuota y tiempo; la defensa tiene 10 minutos. La demo pregrabada muestra RAG, plan/tools y memoria/replan con salidas reales. Si piden live, hay un plan B de 20 segundos con E01 en modo simulado.
+
+**31. “¿Por qué no entregan PDF de las diapositivas?”**  
+Porque el formato solicitado y editable es PPTX. El deck incluye notas del orador, guion y tiempos; el PDF anterior se retiró para no dejar una versión desactualizada. Las capturas y gráficos quedan en `docs/defensa_eft/evidencias/`.
