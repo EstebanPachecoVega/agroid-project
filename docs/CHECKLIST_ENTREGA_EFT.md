@@ -9,7 +9,8 @@
 - [x] Informe EFT en PDF: `docs/INFORME_EFT.pdf` (26 páginas).
 - [x] Notebook autocontenido: `AgroID_Huevos_EFT.ipynb` (122 celdas, ejecutado sin errores).
 - [x] Evidencia EFT: `docs/evidencias_eft/`.
-- [x] Defensa: `docs/defensa_eft/` (PPTX de 15 l?minas, guion, Q&A y demo pregrabada).
+- [x] Defensa: `docs/defensa_eft/` (PPTX de 15 láminas, guion, Q&A y demo pregrabada).
+- [x] Chat web: `agroid/chat_app.py` + `Abrir_Chat.bat` / `Abrir_AgroID.bat`.
 - [x] Matriz de cumplimiento: `docs/MATRIZ_CUMPLIMIENTO_EFT.md`.
 - [x] Análisis de riesgos: `docs/ANALISIS_RIESGOS_EFT.md`.
 - [x] Arquitectura: `docs/ARQUITECTURA_EFT.md`.
@@ -26,6 +27,7 @@
 - [x] Planning eval → react/plan/auto 0,994.
 - [x] Notebook ejecutado con `nbconvert` sin errores.
 - [x] Dashboard inicia y muestra 7 pestañas sin excepciones.
+- [x] Chat web inicia en `8502` y ejecuta una consulta real/simulada.
 - [x] PDF generado con portada, índice, figuras, tablas, referencias y anexos.
 
 ## Verificación de contenido

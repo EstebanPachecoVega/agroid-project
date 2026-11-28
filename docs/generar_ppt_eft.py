@@ -63,7 +63,7 @@ def _set_line(shape, color: RGBColor | None, width: float = 0.9) -> None:
 
 
 def _strip_style(shape) -> None:
-    """Quita el estilo de tema (sombra, relleno y l?nea) para un look plano."""
+    """Quita el estilo de tema (sombra, relleno y línea) para un look plano."""
     from pptx.oxml.ns import qn
 
     style = shape._element.find(qn("p:style"))
@@ -662,7 +662,7 @@ def slide_results(prs):
         line_spacing=1.12,
         space_after=10,
     )
-    add_text(s, 0.9, 8.55, 12.2, 0.5, "E04 y E05 concentran la latencia; E06 se bloque? antes de llamar al modelo.", size=12.5, color=GRAY)
+    add_text(s, 0.9, 8.55, 12.2, 0.5, "E04 y E05 concentran la latencia; E06 se bloqueó antes de llamar al modelo.", size=12.5, color=GRAY)
     takeaway(s, "El score alto no borra las brechas: citas 0,667 y groundedness 0,810 son la agenda.", y=9.35)
     add_notes(
         s,

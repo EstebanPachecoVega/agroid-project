@@ -125,7 +125,7 @@ Sí, por eso hay límite de 3 escrituras, validación, ambigüedad y confirmaci�
 La traza E03 y la lista son de la corrida EFT del 27/11/2026 (`visual-E03`). La captura de overview de la EP3 se usó como referencia histórica de la instrumentación, pero el deck final usa la traza EFT real.
 
 **30. “¿Por qué no hacen la demo en vivo?”**  
-Porque los 8 casos reales consumen cuota y tiempo; la defensa tiene 10 minutos. La demo pregrabada muestra RAG, plan/tools y memoria/replan con salidas reales. Si piden live, hay un plan B de 20 segundos con E01 en modo simulado.
+Porque los 8 casos reales consumen cuota y tiempo. La demo pregrabada muestra RAG, plan/tools y memoria/replan con salidas reales. Si piden live, abrimos la ventana de chat (`Abrir_AgroID.bat`) y hacemos 1–2 consultas: déficit y RAG. Si falla la API, cambiamos a **Simulado** en la misma ventana.
 
 **31. “¿Por qué no entregan PDF de las diapositivas?”**  
 Porque el formato solicitado y editable es PPTX. El deck incluye notas del orador, guion y tiempos; el PDF anterior se retiró para no dejar una versión desactualizada. Las capturas y gráficos quedan en `docs/defensa_eft/evidencias/`.

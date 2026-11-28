@@ -8,10 +8,25 @@ Proyecto de la **Evaluación Final Transversal (EFT) de ISY0101**. El agente con
 **Notebook EFT:** [`AgroID_Huevos_EFT.ipynb`](AgroID_Huevos_EFT.ipynb)  
 **Informe EFT:** [`docs/INFORME_EFT.md`](docs/INFORME_EFT.md) · [`docs/INFORME_EFT.pdf`](docs/INFORME_EFT.pdf)  
 **Defensa:** [`docs/defensa_eft/`](docs/defensa_eft/) · [`diapositivas.pptx`](docs/defensa_eft/diapositivas.pptx) (15 láminas, notas y tiempos)  
+**Chat web:** [`agroid/chat_app.py`](agroid/chat_app.py) · `Abrir_Chat.bat` → `http://localhost:8502`  
 **Evidencia EFT:** [`docs/evidencias_eft/`](docs/evidencias_eft/)  
 **Checklist de entrega:** [`docs/CHECKLIST_ENTREGA_EFT.md`](docs/CHECKLIST_ENTREGA_EFT.md)
 
 > Datos de inventario simulados. El caso es verosímil y no corresponde a un cliente real. No usar para gestionar una operación avícola real sin validar datos, reglas, fuentes y contenido técnico.
+
+## Chat web
+
+Para conversar con el agente sin usar terminal:
+
+1. Doble clic en `Abrir_Chat.bat` (solo chat) o `Abrir_AgroID.bat` (chat + dashboard).
+2. Se abre `http://localhost:8502`.
+3. Elige modo `auto`, `react` o `plan`; modelo Nemotron, free o simulado.
+4. Escribe la consulta y pulsa **Enviar consulta**.
+5. Cada respuesta muestra tools, tokens, plan, fuentes RAG y trace.
+
+El lanzador deja una consola minimizada por cada servidor. **No la cierres mientras uses la app**; para apagarla, cierra esas ventanas o presiona `Ctrl+C`.
+
+La app usa `run_turn` y las mismas herramientas del agente. No es un mockup. Las escrituras modifican la base de demostración; usa **Datos de demo → Restaurar datos de demo** para volver al estado inicial.
 
 ## EFT · Qué incluye
 
@@ -197,6 +212,7 @@ LANGSMITH_PROJECT=agroid-huevos-ep3
 | `python -m agroid.benchmarks.rescore --run-id <run_id>` | Recalcula métricas con el evaluador corregido |
 | `python -m agroid.benchmarks.results` | Consolida resultados en CSV, JSON y Markdown |
 | `streamlit run agroid/dashboard/app.py` | Abre el dashboard; usa `?solo_reales=1&sin_errores=1` para una vista limpia |
+| `streamlit run agroid/chat_app.py --server.port 8502` | Abre el chat web; también se puede usar `Abrir_Chat.bat` |
 
 ### Cuota de modelos gratuitos
 
@@ -220,13 +236,13 @@ python tests/test_evaluator.py
 python tests/test_agent_sim.py
 ```
 
-Cada archivo configura sus propios directorios temporales y desactiva LangSmith, por lo que las pruebas no consumen cuota. También puedes ejecutar todo con `python tests/run_all.py`.
+Cada archivo configura sus propios directorios temporales y desactiva LangSmith, por lo que las pruebas no consumen cuota. También puedes ejecutar todo con `python tests/run_all.py`; el runner verifica que los archivos editables estén en UTF-8 y sin mojibake.
 
 ### Estructura EP3
 
 ```text
 agroid/
-  config.py, db.py, rag.py, tools.py, agent.py, cli.py
+  config.py, db.py, rag.py, tools.py, agent.py, cli.py, chat_app.py
   observability/   # LangSmith, JSONL, SQLite, callbacks, métricas, detectores
   security/        # PII, inyección, rate limit, integridad, moderación
   benchmarks/      # casos, runner, carga, TTFT, exportación, LLM simulado

@@ -22,7 +22,7 @@
 | 8 | Planificación adaptativa | 0:50 | 5:15 | Clasificar, planificar, monitorear y replanificar | Javier |
 | 9 | Dashboard EFT | 0:45 | 6:00 | La evidencia se filtra y se audita | Esteban |
 | 10 | LangSmith y traza E03 | 0:40 | 6:40 | El tiempo se va en el LLM | Esteban |
-| 11 | Demo pregrabada | 0:40 | 7:20 | Tres salidas reales, sin Colab | Javier |
+| 11 | Demo pregrabada o chat | 0:40 | 7:20 | Tres paneles o 1–2 consultas | Javier |
 | 12 | Seguridad y ética | 0:40 | 8:00 | 7/7 pruebas y límites declarados | Javier |
 | 13 | Mejoras y roadmap | 0:35 | 8:35 | Cada propuesta nace de una métrica | Javier |
 | 14 | Conclusión | 0:25 | 9:00 | Observable, corregible, con límites | Esteban |
@@ -146,11 +146,11 @@
 
 **Transición.** “Con esta evidencia, la demo se reemplaza por tres salidas pregrabadas.”
 
-## 6:40–7:20 · Demo pregrabada
+## 6:40–7:20 · Demo pregrabada o chat interactivo
 
-**Qué decir.** “No ejecutamos Colab en vivo: sería muy largo y depende de la cuota. La demo son tres evidencias. RAG: la consulta al USDA devuelve [E05] y la respuesta correcta. Plan y tools: E03 (déficit + priorización) muestra calcular_deficit y priorizar_pedidos, con trace_id. Memoria y replan: Hotel Costa sobrevive al reset y la prueba de fallo deja replan_count=1. Si piden live, hacemos solo E01 (RAG externo USDA) en modo simulado y mostramos el trace_id en 20 segundos.”
+**Qué decir.** “No ejecutamos Colab en vivo: sería muy largo y depende de la cuota. La demo son tres evidencias. RAG: la consulta al USDA devuelve [E05] y la respuesta correcta. Plan y tools: E03 (déficit + priorización) muestra calcular_deficit y priorizar_pedidos, con trace_id. Memoria y replan: Hotel Costa sobrevive al reset y la prueba de fallo deja replan_count=1. Si piden escribir, abrimos la ventana de chat y hacemos 1–2 consultas; no los 8 casos. Si falla la API, cambiamos a modo simulado en la misma ventana.”
 
-**Qué mostrar.** Lámina 11: tres paneles; no leer todo, señalar una línea por panel.
+**Qué mostrar.** Lámina 11: tres paneles; si piden live, abrir `Abrir_AgroID.bat`, consultar déficit y RAG, y volver al deck.
 
 **Transición.** “La última capa es seguridad y ética.”
 
